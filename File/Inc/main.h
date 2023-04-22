@@ -226,39 +226,102 @@ extern __IO uint16_t ADCValue[6];
 #endif
 
 
-/* Private defines -----------------------------------------------------------*/
-//#define SPI1_SCK_Pin            GPIO_PIN_5
-//#define SPI1_SCK_               GPIO_Port GPIOA
-//#define SPI1_MISO_Pin           GPIO_PIN_6
-//#define SPI1_MISO_GPIO_Port     GPIOA
-//#define SPI1_MOSI_Pin           GPIO_PIN_7
-//#define SPI1_MOSI_GPIO_Port     GPIOA
-//#define IIC_SCL_SOFT_Pin        GPIO_PIN_6
-//#define IIC_SCL_SOFT_GPIO_Port  GPIOC
-//#define IIC_SDA_SOFT_Pin        GPIO_PIN_8
-//#define IIC_SDA_SOFT_GPIO_Port  GPIOC
 
 
-//#define OLED_DC_Pin             GPIO_PIN_8
-//#define OLED_DC_GPIO_Port       GPIOA
-//#define OLED_RST_Pin            GPIO_PIN_9
-//#define OLED_RST_GPIO_Port      GPIOA
-//#define OLED_CS_Pin             GPIO_PIN_6
-//#define OLED_CS_GPIO_Port       GPIOB
-//#define I2C1_SCL_Pin            GPIO_PIN_8
-//#define I2C1_SCL_GPIO_Port      GPIOB
-//#define I2C1_SDA_Pin            GPIO_PIN_9
-//#define I2C1_SDA_GPIO_Port      GPIOB
-         
+ 
+//GPOP 내용 설정. 
+//ADDRESS 입력 스위치
+#define ID_SWITCH_1_0              GPIO_PIN_3
+#define ID_SWITCH_1_0_Port               GPIOE
+
+#define ID_SWITCH_1_1              GPIO_PIN_4
+#define ID_SWITCH_1_1_Port               GPIOE
+
+#define ID_SWITCH_1_2              GPIO_PIN_5
+#define ID_SWITCH_1_2_Port               GPIOE
+
+#define ID_SWITCH_1_3              GPIO_PIN_6
+#define ID_SWITCH_1_3_Port               GPIOE
+
+
+#define ID_SWITCH_2_0              GPIO_PIN_7
+#define ID_SWITCH_2_0_Port               GPIOE
+
+#define ID_SWITCH_2_1              GPIO_PIN_8
+#define ID_SWITCH_2_1_Port               GPIOE
+
+#define ID_SWITCH_2_2              GPIO_PIN_9
+#define ID_SWITCH_2_2_Port               GPIOE
+
+#define ID_SWITCH_2_3              GPIO_PIN_10
+#define ID_SWITCH_2_3_Port               GPIOE
+
+
+#define ID_SWITCH_3_0              GPIO_PIN_11
+#define ID_SWITCH_3_0_Port               GPIOE
+
+#define ID_SWITCH_3_1              GPIO_PIN_12
+#define ID_SWITCH_3_1_Port               GPIOE
+
+#define ID_SWITCH_3_2              GPIO_PIN_13
+#define ID_SWITCH_3_2_Port               GPIOE
+
+#define ID_SWITCH_3_3              GPIO_PIN_14
+#define ID_SWITCH_3_3_Port               GPIOE
+
+
+
+
+// PICTO 
+#define PICTO_LED1                 GPIO_PIN_7
+#define PICTO_LED1_Port                 GPIOD 
+
+#define PICTO_LED2                 GPIO_PIN_10
+#define PICTO_LED2_Port                 GPIOD 
+
+#define PICTO_LED3                 GPIO_PIN_11
+#define PICTO_LED3_Port                 GPIOD 
+
+#define PICTO_LED4                  GPIO_PIN_0
+#define PICTO_LED4_Port                 GPIOE 
+
+#define PICTO_LED5                  GPIO_PIN_1
+#define PICTO_LED5_Port                 GPIOE 
+
+///////////////////////////////
+
+#define STATUS_LED                  GPIO_PIN_11 
+#define STATUS_LED_Port                 GPIOA 
+
+#define SPI_CS1                     GPIO_PIN_1 
+#define SPI_CS1_Port                    GPIOD 
+
+#define WP_MEM                      GPIO_PIN_2
+#define WP_MEM_Port                     GPIOD 
+
+#define PHY_RST                     GPIO_PIN_6 
+#define PHY_RST_Port                    GPIOD 
+
+#define PWRDN_INT                   GPIO_PIN_0 
+#define PWRDN_INT_Port                  GPIOC
+
+#define WDT_ST                      GPIO_PIN_8
+#define WDT_ST_Port                     GPIOA
+
+
+//INPUT 
+#define TEST_MODE                   GPIO_PIN_8 
+#define TEST_MODE_Port                  GPIOB 
+
+#define MODE_SET                    GPIO_PIN_0
+#define MODE_SET_Port                   GPIOD
+
+
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
    
 void Time_Main(void);
     
-
-
-
-
 
 void UDPdebug_print_JDS(struct udp_hdr *udphdr);
     

@@ -308,18 +308,23 @@ int main(void)
 	/* Notify user about the network interface config */
 	User_notification(&gnetif);
 
+    
+    LED_GPIO_Init();
+    
 
 	Timer_init(); 
 
 	USRAT_init();
 
     
-	MX_I2C1_Init();
-    MX_I2C1_Init();
+	//MX_I2C1_Init();
+    //MX_I2C1_Init();
     
 	//MX_I2C2_Init();
    // MX_I2C2_Init();
 
+    
+    
     
     I2C_HAL_ReadBytes(&hi2c1,0x48,0x00,(uint8_t *)nRbuf,2);
     
@@ -361,15 +366,15 @@ int main(void)
 
 
     //-------------------ADC MAC 설정 
-    MX_ADC_DMA_Init();
-	MX_ADC1_Init();
-    MX_ADC3_Init();
+    //MX_ADC_DMA_Init();
+	//MX_ADC1_Init();
+   // MX_ADC3_Init();
     //----------------------------
     
 
 	//--------------LCD 초기 설정 부분.
-	OLED_1in3_c_test();
-    OLED_Print(); // 약 350ms 필요.
+	//OLED_1in3_c_test();
+    //OLED_Print(); // 약 350ms 필요.
 	//-----------------------
 
 	
@@ -435,6 +440,12 @@ int main(void)
     
 		USARTRX_MainPro();
     
+	if(nLedPrintf_Flag)
+	{
+		nLedPrintf_Flag = 0;
+		LED_SCREEN_PRINT();
+	}
+
         
 //        if(HAL_GetTick() >= 15000 ) // 15초 부팅 할때 초기 AMP  제어 OFF
 //        {
@@ -677,37 +688,35 @@ static void BSP_Config(void)
 	GPIO_InitStructure.Pin = GPIO_PIN_6;
 	HAL_GPIO_Init(GPIOD, &GPIO_InitStructure);
     
-        
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        
-        
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
-    
-    
 	/* Configure LED1, LED2 */
 	//BSP_LED_Init(LED1);
 	//BSP_LED_Init(LED2);
 
 	/* Set Systick Interrupt to the highest priority */
 	HAL_NVIC_SetPriority(SysTick_IRQn, 0x0, 0x0);
+
+
+
+// PICTO control GPIO
+	__GPIOD_CLK_ENABLE();
+	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStructure.Pull = GPIO_PULLUP;
+	GPIO_InitStructure.Pin =  PICTO_LED1 |PICTO_LED2 |PICTO_LED3;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(PICTO_LED1_Port, &GPIO_InitStructure); 
+
+
+
+	__GPIOE_CLK_ENABLE();
+	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStructure.Pull = GPIO_PULLUP;
+	GPIO_InitStructure.Pin =  PICTO_LED4 |PICTO_LED5;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(PICTO_LED4_Port, &GPIO_InitStructure); 
+	
+
+
+
 
 //	// RUN LED
 //	__GPIOI_CLK_ENABLE();
@@ -1136,6 +1145,16 @@ void Time_Main(void)
         {
             
         }
+
+		HAL_GPIO_TogglePin(PICTO_LED1_Port, PICTO_LED1); // RUN LED
+		HAL_GPIO_TogglePin(PICTO_LED2_Port, PICTO_LED2); // RUN LED
+		HAL_GPIO_TogglePin(PICTO_LED3_Port, PICTO_LED3); // RUN LED
+		HAL_GPIO_TogglePin(PICTO_LED4_Port, PICTO_LED4); // RUN LED
+		HAL_GPIO_TogglePin(PICTO_LED5_Port, PICTO_LED5); // RUN LED
+
+
+		
+
         
         //ethernetif_set_link(&gnetif);
 
@@ -1194,6 +1213,11 @@ void Time_Main(void)
         
     if (!(m_Main_TIM_Cnt % 10000)) // 10sec
     {
+        
+        sColorCode++;
+        
+        sColorCode = sColorCode < 250 ? sColorCode : 0;
+        
 //        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
 //        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
 //        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
