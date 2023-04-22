@@ -21664,6 +21664,35 @@ void Timer_init(void);
 
 
 
+     
+     
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -21694,6 +21723,8 @@ uint8_t LED_Pattern_TEST(void);
 void LED_Timer_1ms(void);
 
 extern char mStringBuf[15][40] ;
+
+extern uint8_t sColorCode;
 
 
 
@@ -28495,6 +28526,8 @@ extern volatile uint16_t ADCValue[6];
 
 
 
+
+
  
 
 
@@ -28518,16 +28551,27 @@ extern volatile uint16_t ADCValue[6];
 
 
 
-         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  
    
 void Time_Main(void);
     
-
-
-
-
 
 void UDPdebug_print_JDS(struct udp_hdr *udphdr);
     
@@ -30354,12 +30398,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
             nTime_Flage_100us++;
             
 
-            if(!(nTime_Flage_100us%1000))
+            if(!(nTime_Flage_100us%5))
             {
                 
                 
                     
-                    
+                    nLedPrintf_Flag = 1;
                     
                 
                     

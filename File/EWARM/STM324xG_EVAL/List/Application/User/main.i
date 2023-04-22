@@ -28201,6 +28201,8 @@ extern volatile uint16_t ADCValue[6];
 
 
 
+
+
  
 
 
@@ -28224,16 +28226,27 @@ extern volatile uint16_t ADCValue[6];
 
 
 
-         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  
    
 void Time_Main(void);
     
-
-
-
-
 
 void UDPdebug_print_JDS(struct udp_hdr *udphdr);
     
@@ -30086,6 +30099,35 @@ void setAmp_Mute_2(_Bool state);
 
 
 
+     
+     
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -30116,6 +30158,8 @@ uint8_t LED_Pattern_TEST(void);
 void LED_Timer_1ms(void);
 
 extern char mStringBuf[15][40] ;
+
+extern uint8_t sColorCode;
 
 
 
@@ -31673,14 +31717,14 @@ const unsigned char completeVersion[] =
 const unsigned char completeVersionBuild[] = 
 {
 	'B',
-	("Apr 14 2023"[ 9]),
-	("Apr 14 2023"[10]),
+	("Apr 20 2023"[ 9]),
+	("Apr 20 2023"[10]),
    
-	((("Apr 14 2023"[0] == 'O') || ("Apr 14 2023"[0] == 'N') || ("Apr 14 2023"[0] == 'D')) ? '1' : '0'),
-	( (("Apr 14 2023"[0] == 'J' && "Apr 14 2023"[1] == 'a' && "Apr 14 2023"[2] == 'n')) ? '1' : (("Apr 14 2023"[0] == 'F')) ? '2' : (("Apr 14 2023"[0] == 'M' && "Apr 14 2023"[1] == 'a' && "Apr 14 2023"[2] == 'r')) ? '3' : (("Apr 14 2023"[0] == 'A' && "Apr 14 2023"[1] == 'p')) ? '4' : (("Apr 14 2023"[0] == 'M' && "Apr 14 2023"[1] == 'a' && "Apr 14 2023"[2] == 'y')) ? '5' : (("Apr 14 2023"[0] == 'J' && "Apr 14 2023"[1] == 'u' && "Apr 14 2023"[2] == 'n')) ? '6' : (("Apr 14 2023"[0] == 'J' && "Apr 14 2023"[1] == 'u' && "Apr 14 2023"[2] == 'l')) ? '7' : (("Apr 14 2023"[0] == 'A' && "Apr 14 2023"[1] == 'u')) ? '8' : (("Apr 14 2023"[0] == 'S')) ? '9' : (("Apr 14 2023"[0] == 'O')) ? '0' : (("Apr 14 2023"[0] == 'N')) ? '1' : (("Apr 14 2023"[0] == 'D')) ? '2' : '?' ),
+	((("Apr 20 2023"[0] == 'O') || ("Apr 20 2023"[0] == 'N') || ("Apr 20 2023"[0] == 'D')) ? '1' : '0'),
+	( (("Apr 20 2023"[0] == 'J' && "Apr 20 2023"[1] == 'a' && "Apr 20 2023"[2] == 'n')) ? '1' : (("Apr 20 2023"[0] == 'F')) ? '2' : (("Apr 20 2023"[0] == 'M' && "Apr 20 2023"[1] == 'a' && "Apr 20 2023"[2] == 'r')) ? '3' : (("Apr 20 2023"[0] == 'A' && "Apr 20 2023"[1] == 'p')) ? '4' : (("Apr 20 2023"[0] == 'M' && "Apr 20 2023"[1] == 'a' && "Apr 20 2023"[2] == 'y')) ? '5' : (("Apr 20 2023"[0] == 'J' && "Apr 20 2023"[1] == 'u' && "Apr 20 2023"[2] == 'n')) ? '6' : (("Apr 20 2023"[0] == 'J' && "Apr 20 2023"[1] == 'u' && "Apr 20 2023"[2] == 'l')) ? '7' : (("Apr 20 2023"[0] == 'A' && "Apr 20 2023"[1] == 'u')) ? '8' : (("Apr 20 2023"[0] == 'S')) ? '9' : (("Apr 20 2023"[0] == 'O')) ? '0' : (("Apr 20 2023"[0] == 'N')) ? '1' : (("Apr 20 2023"[0] == 'D')) ? '2' : '?' ),
    
-	(("Apr 14 2023"[4] >= '0') ? ("Apr 14 2023"[4]) : '0'),
-	("Apr 14 2023"[ 5]),
+	(("Apr 20 2023"[4] >= '0') ? ("Apr 20 2023"[4]) : '0'),
+	("Apr 20 2023"[ 5]),
 	
 	
     
@@ -31761,18 +31805,23 @@ int main(void)
 	 
 	User_notification(&gnetif);
 
+    
+    LED_GPIO_Init();
+    
 
 	Timer_init(); 
 
 	USRAT_init();
 
     
-	MX_I2C1_Init();
-    MX_I2C1_Init();
+	
+    
     
 	
    
 
+    
+    
     
     I2C_HAL_ReadBytes(&hi2c1,0x48,0x00,(uint8_t *)nRbuf,2);
     
@@ -31814,15 +31863,15 @@ int main(void)
 
 
     
-    MX_ADC_DMA_Init();
-	MX_ADC1_Init();
-    MX_ADC3_Init();
+    
+	
+   
     
     
 
 	
-	OLED_1in3_c_test();
-    OLED_Print(); 
+	
+    
 	
 
 	
@@ -31888,6 +31937,12 @@ int main(void)
     
 		USARTRX_MainPro();
     
+	if(nLedPrintf_Flag)
+	{
+		nLedPrintf_Flag = 0;
+		LED_SCREEN_PRINT();
+	}
+
         
 
 
@@ -32128,37 +32183,35 @@ static void BSP_Config(void)
 	GPIO_InitStructure.Pin = ((uint16_t)0x0040);
 	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), &GPIO_InitStructure);
     
-        
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        
-        
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 1); 
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 1); 
-    
-    
 	 
 	
 	
 
 	 
 	HAL_NVIC_SetPriority(SysTick_IRQn, 0x0, 0x0);
+
+
+
+
+	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (3U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (3U)))); ((void)(tmpreg)); } while(0U);
+	GPIO_InitStructure.Mode = 0x00000001U;
+	GPIO_InitStructure.Pull = 0x00000001U;
+	GPIO_InitStructure.Pin =  ((uint16_t)0x0080) |((uint16_t)0x0400) |((uint16_t)0x0800);
+	GPIO_InitStructure.Speed = 0x00000003U;
+	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), &GPIO_InitStructure); 
+
+
+
+	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (4U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (4U)))); ((void)(tmpreg)); } while(0U);
+	GPIO_InitStructure.Mode = 0x00000001U;
+	GPIO_InitStructure.Pull = 0x00000001U;
+	GPIO_InitStructure.Pin =  ((uint16_t)0x0001) |((uint16_t)0x0002);
+	GPIO_InitStructure.Speed = 0x00000003U;
+	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1000U)), &GPIO_InitStructure); 
+	
+
+
+
 
 
 
@@ -32581,6 +32634,16 @@ void Time_Main(void)
         {
             
         }
+
+		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0080)); 
+		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0400)); 
+		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0800)); 
+		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1000U)), ((uint16_t)0x0001)); 
+		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1000U)), ((uint16_t)0x0002)); 
+
+
+		
+
         
         
 
@@ -32639,6 +32702,11 @@ void Time_Main(void)
         
     if (!(m_Main_TIM_Cnt % 10000)) 
     {
+        
+        sColorCode++;
+        
+        sColorCode = sColorCode < 250 ? sColorCode : 0;
+        
 
 
 

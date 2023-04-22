@@ -27090,6 +27090,35 @@ void ethernetif_notify_conn_changed(struct netif *netif);
 
 
 
+     
+     
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -27120,6 +27149,8 @@ uint8_t LED_Pattern_TEST(void);
 void LED_Timer_1ms(void);
 
 extern char mStringBuf[15][40] ;
+
+extern uint8_t sColorCode;
 
 
 
@@ -29178,6 +29209,8 @@ extern volatile uint16_t ADCValue[6];
 
 
 
+
+
  
 
 
@@ -29201,16 +29234,27 @@ extern volatile uint16_t ADCValue[6];
 
 
 
-         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  
    
 void Time_Main(void);
     
-
-
-
-
 
 void UDPdebug_print_JDS(struct udp_hdr *udphdr);
     

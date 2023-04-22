@@ -28197,6 +28197,8 @@ extern volatile uint16_t ADCValue[6];
 
 
 
+
+
  
 
 
@@ -28220,16 +28222,27 @@ extern volatile uint16_t ADCValue[6];
 
 
 
-         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  
    
 void Time_Main(void);
     
-
-
-
-
 
 void UDPdebug_print_JDS(struct udp_hdr *udphdr);
     
@@ -28821,6 +28834,35 @@ extern mLED_PROCESS_Flag mLed_Process_Flag;
 
 
 
+     
+     
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -28851,6 +28893,8 @@ uint8_t LED_Pattern_TEST(void);
 void LED_Timer_1ms(void);
 
 extern char mStringBuf[15][40] ;
+
+extern uint8_t sColorCode;
 
 
 
@@ -29981,37 +30025,59 @@ void LED_GPIO_Init(void)
 	GPIO_InitTypeDef   GPIO_InitStructure;
 
 	  
-	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (0U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (0U)))); ((void)(tmpreg)); } while(0U);
+	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (3U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (3U)))); ((void)(tmpreg)); } while(0U);
 	GPIO_InitStructure.Mode = 0x00000001U;
 	GPIO_InitStructure.Pull = 0x00000001U;
-	GPIO_InitStructure.Pin = ((uint16_t)0x0040);
+	GPIO_InitStructure.Pin =  ((uint16_t)0x1000) |((uint16_t)0x2000) |((uint16_t)0x4000);
 	GPIO_InitStructure.Speed = 0x00000003U;
-	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0000U)), &GPIO_InitStructure); 
+	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), &GPIO_InitStructure); 
 	
 	
 	 
 	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (1U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (1U)))); ((void)(tmpreg)); } while(0U);
 	GPIO_InitStructure.Mode = 0x00000001U;
 	GPIO_InitStructure.Pull = 0x00000001U;
-	GPIO_InitStructure.Pin = ((uint16_t)0x0001) | ((uint16_t)0x0020);
+	GPIO_InitStructure.Pin = ((uint16_t)0x0200);
+	GPIO_InitStructure.Speed = 0x00000003U;
+	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), &GPIO_InitStructure);
+
+
+
+       
+	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (1U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (1U)))); ((void)(tmpreg)); } while(0U);
+	GPIO_InitStructure.Mode = 0x00000001U;
+	GPIO_InitStructure.Pull = 0x00000001U;
+	GPIO_InitStructure.Pin =  ((uint16_t)0x4000); 
 	GPIO_InitStructure.Speed = 0x00000003U;
 	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), &GPIO_InitStructure);
 	
-	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (2U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (2U)))); ((void)(tmpreg)); } while(0U);
+     
+	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (1U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (1U)))); ((void)(tmpreg)); } while(0U);
 	GPIO_InitStructure.Mode = 0x00000001U;
 	GPIO_InitStructure.Pull = 0x00000001U;
-	GPIO_InitStructure.Pin =  ((uint16_t)0x0040) | ((uint16_t)0x0080) | ((uint16_t)0x0100);
+	GPIO_InitStructure.Pin = ((uint16_t)0x8000); 
+	GPIO_InitStructure.Speed = 0x00000003U;
+	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), &GPIO_InitStructure);
+    
+
+     
+    do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (2U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (2U)))); ((void)(tmpreg)); } while(0U);
+	GPIO_InitStructure.Mode = 0x00000001U;
+	GPIO_InitStructure.Pull = 0x00000001U;
+	GPIO_InitStructure.Pin = ((uint16_t)0x1000) | ((uint16_t)0x2000) | ((uint16_t)0x4000) | ((uint16_t)0x8000); 
 	GPIO_InitStructure.Speed = 0x00000003U;
 	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), &GPIO_InitStructure);
-	
-	
-	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (5U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (5U)))); ((void)(tmpreg)); } while(0U);
+
+
+
+     
+    do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (2U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (2U)))); ((void)(tmpreg)); } while(0U);
 	GPIO_InitStructure.Mode = 0x00000001U;
 	GPIO_InitStructure.Pull = 0x00000001U;
-	GPIO_InitStructure.Pin = ((uint16_t)0x0010) | ((uint16_t)0x0020) | ((uint16_t)0x0040) | ((uint16_t)0x0080) | ((uint16_t)0x0100) | ((uint16_t)0x0200);
+	GPIO_InitStructure.Pin = ((uint16_t)0x0040) | ((uint16_t)0x0080) | ((uint16_t)0x0100) | ((uint16_t)0x0200) | ((uint16_t)0x0800) | ((uint16_t)0x0400); 
 	GPIO_InitStructure.Speed = 0x00000003U;
-	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), &GPIO_InitStructure);
-    
+	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), &GPIO_InitStructure);
+  
 
 
 	memset(pVdDot, 0, 6144);
@@ -30072,6 +30138,8 @@ uint8_t dTest_Print_Flag = 1;
 uint8_t mSEPTA_Mark_Flag = 0;
 
 
+ uint8_t sColorCode = 0;
+
 void LED_SCREEN_PRINT(void)
 {
 	uint8_t rowcounter = 0;
@@ -30085,12 +30153,12 @@ void LED_SCREEN_PRINT(void)
  
 	uint8_t brightvalue = 100;  
     
-    uint8_t sColorCode = 0;
+    
     uint16_t sColorCode_Cnt = 0;
     
     uint16_t sDelyTime = 0;
 	
-    uint8_t *pVd = (uint8_t *)0x20015800; 
+    
 
     
     if(dTest_Print_Flag)
@@ -30098,126 +30166,172 @@ void LED_SCREEN_PRINT(void)
       dTest_Print_Flag = 0;
 
       
-        if(mLed_Process_Flag.sPattern_Test_Flag)
-        {
-            mLed_Process_Flag.sPattern_Test_Flag = LED_Pattern_TEST();
-            LED_Block_Screen_Buf();
-        }
-		else if (mLed_Process_Flag.sReClock_Start_Flage) 
-		{
-            LED_FONT_POSITION(&mLed_Process_Flag.sRx_PII_Ascii_Buf[0]);
-            
-			LED_Block_Screen_Buf();
-		}
-        else if(mLed_Process_Flag.sScreen_ScanFlag)
-        {
 
-            
-            mLed_Process_Flag.sScreen_ScanFlag = 0;
 
-            LED_Block_Screen_Buf();
-        }
-        else if(LED_Imag_ScreenNormal_Cnt()) 
-        {
-            LED_Block_Screen_Buf();
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
-    
+         HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), ((uint16_t)0x8000), GPIO_PIN_RESET);  
+
+             
         for (pwmindex = 7; pwmindex>=(7-(3-1)); pwmindex--)
         { 
           sColorCode_Cnt = 0;
-            for (rowcounter=0 ; rowcounter<(16/2) ; rowcounter++) 
+
+          
+            
+            for (rowcounter=0 ; rowcounter<(16) ; rowcounter++) 
             {
                 
-                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0200), GPIO_PIN_SET);  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x1000), GPIO_PIN_SET);  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x2000), GPIO_PIN_SET);  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x4000), GPIO_PIN_SET);  
 
-                for (colcounter=0 ; colcounter<384 ; colcounter++) 
+                 
+                for (colcounter=0 ; colcounter<32 ; colcounter++) 
                 {
                   
                     
-                    sColorCode = pVd[sColorCode_Cnt];
-  
-                    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0080), GPIO_PIN_RESET);  
+                   
+                    
+                   
+                    
+                    
+                    
+                    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), ((uint16_t)0x0200), GPIO_PIN_RESET);  
 
                     
-                    if (((m_ColorCode_256[sColorCode][0] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0000U)),((uint16_t)0x0040),GPIO_PIN_SET);
-                    else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0000U)),((uint16_t)0x0040),GPIO_PIN_RESET);
-
-                    if (((m_ColorCode_256[sColorCode][1] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)),((uint16_t)0x0020),GPIO_PIN_SET);
-                    else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)),((uint16_t)0x0020),GPIO_PIN_RESET);
-
-                    if (((m_ColorCode_256[sColorCode][2] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)),((uint16_t)0x0001),GPIO_PIN_SET);
-                    else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)),((uint16_t)0x0001),GPIO_PIN_RESET);
                     
-                    
-                    
-                     sColorCode = pVd[3072 + sColorCode_Cnt];
-                     
-                     if (((m_ColorCode_256[sColorCode][0] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0040),GPIO_PIN_SET);
+                    if (((m_ColorCode_256[sColorCode][0] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0040),GPIO_PIN_SET);
                     else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0040),GPIO_PIN_RESET);
 
-                    if (((m_ColorCode_256[sColorCode][1] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0080),GPIO_PIN_SET);
+                    if (((m_ColorCode_256[sColorCode][2] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0080),GPIO_PIN_SET);
                     else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0080),GPIO_PIN_RESET);
 
-                    if (((m_ColorCode_256[sColorCode][2] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0100),GPIO_PIN_SET);
+                    if (((m_ColorCode_256[sColorCode][1] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0100),GPIO_PIN_SET);
                     else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0100),GPIO_PIN_RESET);
+                    
+                    
+                    
+                    
+                    
+                   
+                    
+                    if (((m_ColorCode_256[sColorCode][0] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0200),GPIO_PIN_SET);
+                    else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0200),GPIO_PIN_RESET);
+
+                    if (((m_ColorCode_256[sColorCode][1] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0800),GPIO_PIN_SET);
+                    else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0800),GPIO_PIN_RESET);
+
+                    if (((m_ColorCode_256[sColorCode][2] >> pwmindex) & 0x01)==1) HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0400),GPIO_PIN_SET);
+                    else HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x0400),GPIO_PIN_RESET);
+                    
+
+                                          
+                   
+                    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), ((uint16_t)0x0200), GPIO_PIN_SET);  
 
                     
-                     HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0080), GPIO_PIN_SET);  
-                     
-                    if (colcounter>brightvalue)  HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0200), GPIO_PIN_RESET);  
                     
-                    sColorCode_Cnt++;
+                     
+
+
+
+
+
+
+                    
+                    
+                    
                 }
                 
                 
                 
-                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0200), GPIO_PIN_SET);  
+                
+                
+                
+                
+                
+                 
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x1000), GPIO_PIN_SET);  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x2000), GPIO_PIN_SET);  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x4000), GPIO_PIN_SET);  
+	
+
                 
                 sDelyTime = 100;
                 while(sDelyTime--);
                 
                 
-                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)),((uint16_t)0x0100),GPIO_PIN_SET); 
+                
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)),((uint16_t)0x4000),GPIO_PIN_SET); 
+
+
                 
                 
-                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0010), ((rowcounter & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET)); 
-                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0020), ((rowcounter & 0x02) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
-                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0040), ((rowcounter & 0x04) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x1000), ((rowcounter & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET)); 
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x2000), ((rowcounter & 0x02) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x4000), ((rowcounter & 0x04) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x8000), ((rowcounter & 0x08) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
+
         
 
                 
-                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)),((uint16_t)0x0100),GPIO_PIN_RESET); 
                 
-                sDelyTime = 100;
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)),((uint16_t)0x4000),GPIO_PIN_RESET); 
+
+                
+                sDelyTime = 200;
                 while(sDelyTime--);
                 
                 
 
-                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0200), GPIO_PIN_RESET);  
                 
-                
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x1000), GPIO_PIN_RESET);  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x2000), GPIO_PIN_RESET);  
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x4000), GPIO_PIN_RESET);  
+	
                 sDelyTime = (192*(pwmindex-(8-3)+1)*(pwmindex-(8-3)+1)-59)+150;
                 
-                while(sDelyTime--);
+               while(sDelyTime--);
                
                 
                 
                 
                 
-                
-                
-
-                
             }
         }
         
+       
+
         dTest_Print_Flag = 1;
     }
+
+   
     
-    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1400U)), ((uint16_t)0x0200), GPIO_PIN_SET);  
-	
-	
+    
+    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x1000), GPIO_PIN_SET);  
+    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x2000), GPIO_PIN_SET);  
+    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x4000), GPIO_PIN_SET);  
 	
 }
 
@@ -30278,7 +30392,7 @@ void LED_FONT_POSITION(uint8_t *nAscii_Len_Buf)
 						spData_Ko = (nAscii_Len_Buf[sAsciiCnt] - 0x20) * 16;
 
 
-						SPI_FLASH_BufferRead(s_LED_FONT_MAP, spData_Ko, 16);  
+						
 
 
 						spData = (uint8_t *)&s_LED_FONT_MAP[0];
@@ -30324,7 +30438,7 @@ void LED_FONT_POSITION(uint8_t *nAscii_Len_Buf)
 
 					
 
-					SPI_FLASH_BufferRead(s_LED_FONT_MAP, spData_Ko, 32);  
+					
 
 
 					spData = (uint8_t *)&s_LED_FONT_MAP[0];
@@ -30633,7 +30747,7 @@ void LED_Block_Screen_Buf(void)
     }
     else
     {   
-        mFdi_Screen_Print =(FDI_SCREEN_BOKCK *)m_336_MARK_FTNDD;
+        mFdi_Screen_Print =(FDI_SCREEN_BOKCK *)m_SEPTA_MARK_FDI;
     }
 	
 	uint8_t *pVd = (uint8_t *)0x20015800; 
