@@ -28242,6 +28242,7 @@ extern volatile uint16_t ADCValue[6];
 
 
 
+
  
  
    
@@ -30382,6 +30383,8 @@ extern SPI_HandleTypeDef SpiMemoryHandle;
 
 
 
+
+
  
  
 void SPI_FLASH_Main(void);
@@ -31717,14 +31720,14 @@ const unsigned char completeVersion[] =
 const unsigned char completeVersionBuild[] = 
 {
 	'B',
-	("Apr 20 2023"[ 9]),
-	("Apr 20 2023"[10]),
+	("Apr 24 2023"[ 9]),
+	("Apr 24 2023"[10]),
    
-	((("Apr 20 2023"[0] == 'O') || ("Apr 20 2023"[0] == 'N') || ("Apr 20 2023"[0] == 'D')) ? '1' : '0'),
-	( (("Apr 20 2023"[0] == 'J' && "Apr 20 2023"[1] == 'a' && "Apr 20 2023"[2] == 'n')) ? '1' : (("Apr 20 2023"[0] == 'F')) ? '2' : (("Apr 20 2023"[0] == 'M' && "Apr 20 2023"[1] == 'a' && "Apr 20 2023"[2] == 'r')) ? '3' : (("Apr 20 2023"[0] == 'A' && "Apr 20 2023"[1] == 'p')) ? '4' : (("Apr 20 2023"[0] == 'M' && "Apr 20 2023"[1] == 'a' && "Apr 20 2023"[2] == 'y')) ? '5' : (("Apr 20 2023"[0] == 'J' && "Apr 20 2023"[1] == 'u' && "Apr 20 2023"[2] == 'n')) ? '6' : (("Apr 20 2023"[0] == 'J' && "Apr 20 2023"[1] == 'u' && "Apr 20 2023"[2] == 'l')) ? '7' : (("Apr 20 2023"[0] == 'A' && "Apr 20 2023"[1] == 'u')) ? '8' : (("Apr 20 2023"[0] == 'S')) ? '9' : (("Apr 20 2023"[0] == 'O')) ? '0' : (("Apr 20 2023"[0] == 'N')) ? '1' : (("Apr 20 2023"[0] == 'D')) ? '2' : '?' ),
+	((("Apr 24 2023"[0] == 'O') || ("Apr 24 2023"[0] == 'N') || ("Apr 24 2023"[0] == 'D')) ? '1' : '0'),
+	( (("Apr 24 2023"[0] == 'J' && "Apr 24 2023"[1] == 'a' && "Apr 24 2023"[2] == 'n')) ? '1' : (("Apr 24 2023"[0] == 'F')) ? '2' : (("Apr 24 2023"[0] == 'M' && "Apr 24 2023"[1] == 'a' && "Apr 24 2023"[2] == 'r')) ? '3' : (("Apr 24 2023"[0] == 'A' && "Apr 24 2023"[1] == 'p')) ? '4' : (("Apr 24 2023"[0] == 'M' && "Apr 24 2023"[1] == 'a' && "Apr 24 2023"[2] == 'y')) ? '5' : (("Apr 24 2023"[0] == 'J' && "Apr 24 2023"[1] == 'u' && "Apr 24 2023"[2] == 'n')) ? '6' : (("Apr 24 2023"[0] == 'J' && "Apr 24 2023"[1] == 'u' && "Apr 24 2023"[2] == 'l')) ? '7' : (("Apr 24 2023"[0] == 'A' && "Apr 24 2023"[1] == 'u')) ? '8' : (("Apr 24 2023"[0] == 'S')) ? '9' : (("Apr 24 2023"[0] == 'O')) ? '0' : (("Apr 24 2023"[0] == 'N')) ? '1' : (("Apr 24 2023"[0] == 'D')) ? '2' : '?' ),
    
-	(("Apr 20 2023"[4] >= '0') ? ("Apr 20 2023"[4]) : '0'),
-	("Apr 20 2023"[ 5]),
+	(("Apr 24 2023"[4] >= '0') ? ("Apr 24 2023"[4]) : '0'),
+	("Apr 24 2023"[ 5]),
 	
 	
     
@@ -31859,6 +31862,9 @@ int main(void)
     MyPrintf_USART1("Power i2c OK = %02x-%02x\r\n",nRbuf[0],nRbuf[1]);
     
 	Flash_Init();
+    
+    SPI_FLASH_Init();
+    
 	HAL_Delay(10);
 
 
@@ -31931,9 +31937,9 @@ int main(void)
 		sys_check_timeouts();
     
 		   
-		
+		Flash_Main();
 	  
-		
+		SPI_FLASH_Main();
     
 		USARTRX_MainPro();
     
@@ -32217,9 +32223,13 @@ static void BSP_Config(void)
 
 
 
-
-
-
+    do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (0U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (0U)))); ((void)(tmpreg)); } while(0U);
+	GPIO_InitStructure.Mode = 0x00000001U;
+	GPIO_InitStructure.Pull = 0x00000001U;
+	GPIO_InitStructure.Pin = ((uint16_t)0x0010);
+	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0000U)), &GPIO_InitStructure);
+    
+    
 
 
 

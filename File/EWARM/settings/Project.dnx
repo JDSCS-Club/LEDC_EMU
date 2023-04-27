@@ -16,7 +16,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>279292374</Checksum>
+        <Checksum>1396553067</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -44,12 +44,12 @@
         <TracePortSize>0x4</TracePortSize>
     </JLinkDriver>
     <InterruptStripe>
-        <Title0>WWDG</Title0>
-        <Setup0>3 1 3 0 1 0 0 2152264084534041800 1512970760543729272</Setup0>
-        <Title1>TIM5</Title1>
-        <Setup1>3 1 3 0 1 0 0 126373538979911820 8486614989552387580</Setup1>
-        <Title2>USART3</Title2>
-        <Setup2>3 1 3 0 1 0 0 2914140344592 104</Setup2>
+        <Title0>TIM5</Title0>
+        <Setup0>3 1 3 0 1 0 0 126373538979911820 8486614989552387580</Setup0>
+        <Title1>USART3</Title1>
+        <Setup1>3 1 3 0 1 0 0 2914140344592 104</Setup1>
+        <Title2>WWDG</Title2>
+        <Setup2>3 1 3 0 1 0 0 2152264084534041800 1512970760543729272</Setup2>
         <Title3>TIM4</Title3>
         <Setup3>3 1 3 0 1 0 0 126373538979911820 8486614989552387580</Setup3>
         <Title4>SysTick</Title4>
@@ -132,10 +132,10 @@
         <JetConnSerialNo>1158</JetConnSerialNo>
         <JetConnFoundProbes />
         <PrevWtdReset>Connect during reset</PrevWtdReset>
+        <OnlineReset>Software</OnlineReset>
         <DisableInterrupts>0</DisableInterrupts>
         <LeaveRunning>1</LeaveRunning>
         <MultiCoreRunAll>0</MultiCoreRunAll>
-        <OnlineReset>Software</OnlineReset>
     </Jet>
     <PlDriver>
         <FirstRun>0</FirstRun>
@@ -207,18 +207,6 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ "$PROJ_DIR$\TermIO.log"</LogFile>
-    </TermIOLog>
-    <LogFile>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-        <Category2>_ 0</Category2>
-    </LogFile>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
     <struct_types>
         <Fmt0>AnsSetFlag-tAnsCnt	3	0</Fmt0>
         <Fmt1>ETH_DMADescTypeDef-Buffer2NextDescAddr	4	0</Fmt1>
@@ -249,23 +237,24 @@
         <Fmt8>{W}42:FlashAddressPosion	4	0</Fmt8>
         <Fmt9>{W}42:SPI_FLASH_ID	4	0</Fmt9>
         <Fmt10>{W}42:Tcp_flag	4	0</Fmt10>
-        <Fmt11>{W}42:d_BuffCheck	3	0</Fmt11>
-        <Fmt12>{W}42:d_EthernetBuff[53]	4	0</Fmt12>
-        <Fmt13>{W}42:d_EthernetRxCnt	4	0</Fmt13>
-        <Fmt14>{W}42:d_RingPop_Cnt	3	0</Fmt14>
-        <Fmt15>{W}42:d_RingPush_Cnt	3	0</Fmt15>
-        <Fmt16>{W}42:d_hexSwith_Read	4	0</Fmt16>
-        <Fmt17>{W}42:d_hexSwith_Read2	4	0</Fmt17>
-        <Fmt18>{W}42:daa	3	0</Fmt18>
-        <Fmt19>{W}42:gnetif.ip_addr.addr	4	0</Fmt19>
-        <Fmt20>{W}42:mDI_CheckFlag	3	0</Fmt20>
-        <Fmt21>{W}42:mLCD_InputData	1	0</Fmt21>
-        <Fmt22>{W}42:mLed_Process_Flag.sAmp_Falut_val	1	0</Fmt22>
-        <Fmt23>{W}42:mLed_Process_Flag.sDHCP_IP_Val	3	0</Fmt23>
-        <Fmt24>{W}42:mLed_Process_Flag.sScreen_Page_Cnt	3	0</Fmt24>
-        <Fmt25>{W}42:next_timeout	2	0</Fmt25>
-        <Fmt26>{W}42:pmEthernet_Rx_struct	4	0</Fmt26>
-        <Fmt27>{W}42:s_SpkCheck	1	0</Fmt27>
+        <Fmt11>{W}42:Temp	4	0</Fmt11>
+        <Fmt12>{W}42:d_BuffCheck	3	0</Fmt12>
+        <Fmt13>{W}42:d_EthernetBuff[53]	4	0</Fmt13>
+        <Fmt14>{W}42:d_EthernetRxCnt	4	0</Fmt14>
+        <Fmt15>{W}42:d_RingPop_Cnt	3	0</Fmt15>
+        <Fmt16>{W}42:d_RingPush_Cnt	3	0</Fmt16>
+        <Fmt17>{W}42:d_hexSwith_Read	4	0</Fmt17>
+        <Fmt18>{W}42:d_hexSwith_Read2	4	0</Fmt18>
+        <Fmt19>{W}42:daa	3	0</Fmt19>
+        <Fmt20>{W}42:gnetif.ip_addr.addr	4	0</Fmt20>
+        <Fmt21>{W}42:mDI_CheckFlag	3	0</Fmt21>
+        <Fmt22>{W}42:mLCD_InputData	1	0</Fmt22>
+        <Fmt23>{W}42:mLed_Process_Flag.sAmp_Falut_val	1	0</Fmt23>
+        <Fmt24>{W}42:mLed_Process_Flag.sDHCP_IP_Val	3	0</Fmt24>
+        <Fmt25>{W}42:mLed_Process_Flag.sScreen_Page_Cnt	3	0</Fmt25>
+        <Fmt26>{W}42:next_timeout	2	0</Fmt26>
+        <Fmt27>{W}42:pmEthernet_Rx_struct	4	0</Fmt27>
+        <Fmt28>{W}42:s_SpkCheck	1	0</Fmt28>
     </watch_formats>
     <Trace1>
         <Enabled>1</Enabled>
@@ -345,13 +334,6 @@
         <ShowTimeSum>1</ShowTimeSum>
         <SumSortOrder>0</SumSortOrder>
     </InterruptLog>
-    <Aliases>
-        <Count>0</Count>
-        <SuppressDialog>0</SuppressDialog>
-    </Aliases>
-    <Breakpoints2>
-        <Count>0</Count>
-    </Breakpoints2>
     <DriverProfiling>
         <Enabled>1</Enabled>
         <Mode>3</Mode>
@@ -364,4 +346,25 @@
         <Probe0>I0</Probe0>
         <ProbeSetup0>2 1 1 2 0 0</ProbeSetup0>
     </PowerProbe>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ "$PROJ_DIR$\TermIO.log"</LogFile>
+    </TermIOLog>
+    <LogFile>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+        <Category2>_ 0</Category2>
+    </LogFile>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Bp0>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\spi_flash.c}.84.9" 0 0 1 "" 0 "" 0</Bp0>
+        <Bp1>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\spi_flash.c}.94.3" 0 0 1 "" 0 "" 0</Bp1>
+        <Count>2</Count>
+    </Breakpoints2>
+    <Aliases>
+        <Count>0</Count>
+        <SuppressDialog>0</SuppressDialog>
+    </Aliases>
 </settings>
