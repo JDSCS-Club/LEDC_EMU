@@ -196,7 +196,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         USART_TIM();
         
 	    //LED_Timer_1ms(); // LED 1ms  Å¸ÀÌÄ¿,
-        //SPI_FLASH_Timer_1ms();
+        SPI_FLASH_Timer_1ms();
         //lcd_Timer();
         
        

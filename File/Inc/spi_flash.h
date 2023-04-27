@@ -55,8 +55,12 @@ extern SPI_HandleTypeDef SpiMemoryHandle;
 
 
 
-#define SPI_FLASH_CS_LOW()        HAL_GPIO_WritePin(GPIOI,GPIO_PIN_0,GPIO_PIN_RESET);
-#define SPI_FLASH_CS_HIGH()        HAL_GPIO_WritePin(GPIOI,GPIO_PIN_0,GPIO_PIN_SET);
+#define SPI_FLASH_CS0_LOW()        HAL_GPIO_WritePin(SPI_CS0_Port,GPIO_PIN_4,GPIO_PIN_RESET);
+#define SPI_FLASH_CS0_HIGH()        HAL_GPIO_WritePin(SPI_CS0_Port,GPIO_PIN_4,GPIO_PIN_SET);
+
+
+#define SPI_FLASH_CS1_LOW()        HAL_GPIO_WritePin(SPI_CS1_Port,SPI_CS1,GPIO_PIN_RESET);
+#define SPI_FLASH_CS1_HIGH()        HAL_GPIO_WritePin(SPI_CS1_Port,SPI_CS1,GPIO_PIN_SET);
 
 
 /* Exported functions ------------------------------------------------------- */

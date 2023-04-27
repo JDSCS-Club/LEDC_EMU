@@ -362,6 +362,9 @@ int main(void)
     MyPrintf_USART1("Power i2c OK = %02x-%02x\r\n",nRbuf[0],nRbuf[1]);
     
 	Flash_Init();
+    
+    SPI_FLASH_Init();
+    
 	HAL_Delay(10);
 
 
@@ -434,9 +437,9 @@ int main(void)
 		sys_check_timeouts();
     
 		/* 내부 메모리 저장 및 읽기 */  
-		//Flash_Main();
+		Flash_Main();
 	  
-		//SPI_FLASH_Main();
+		SPI_FLASH_Main();
     
 		USARTRX_MainPro();
     
@@ -721,10 +724,14 @@ static void BSP_Config(void)
 //	// RUN LED
 //	__GPIOI_CLK_ENABLE();
 //
-//	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-//	GPIO_InitStructure.Pull = GPIO_PULLUP;
-//	GPIO_InitStructure.Pin = GPIO_PIN_11;
-//	HAL_GPIO_Init(GPIOI, &GPIO_InitStructure);
+//   SPI CS 
+    __GPIOA_CLK_ENABLE();
+	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStructure.Pull = GPIO_PULLUP;
+	GPIO_InitStructure.Pin = GPIO_PIN_4;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
+    
+    
 //
 //	/*Hex ??끉?맄燁??揶쏅?れ뱽 ??럩堉? ??뫀?뼄.*/
 //	//HSW 1,2 스위치를 이용해서, 장치 식별을 한다.

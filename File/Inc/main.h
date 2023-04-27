@@ -295,6 +295,9 @@ extern __IO uint16_t ADCValue[6];
 
 #define SPI_CS1                     GPIO_PIN_1 
 #define SPI_CS1_Port                    GPIOD 
+#define SPI_CS0                     GPIO_PIN_4 
+#define SPI_CS0_Port                    GPIOA 
+
 
 #define WP_MEM                      GPIO_PIN_2
 #define WP_MEM_Port                     GPIOD 
