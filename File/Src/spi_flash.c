@@ -78,11 +78,12 @@ void SPI_FLASH_Main(void)
 {
     uint32_t sSpi_Mermory_Address = 0;
 	
-	if((mSPI_Time_Cnt==5000))
+	if((mSPI_Time_Cnt>=5000) && (mSPI_Time_Cnt<=5500))
 	{
 		
         mSPI_Time_Cnt++;
         
+        mSPI_Time_Cnt = 5600;
         
         mSPI_Write_Cnt = mSPI_Write_Cnt %70;
         
@@ -91,7 +92,7 @@ void SPI_FLASH_Main(void)
 		SPI_FLASH_ID = SPI_FLASH_ReadID(); /* Get SPI Flash ID */
 		//SPI_FLASH_BufferRead(Rx_Buffer, sSpi_Mermory_Address, SPI_RX_BufferSize()); /* Read data from SPI FLASH memory */
 		
-		if(SST26VF032B_FLASH_ID == (SPI_FLASH_ID&0xFFFF))
+		if(SST26VF032B_FLASH_ID == (SPI_FLASH_ID&0xFFFFFF))
 		{
      
           

@@ -39,7 +39,7 @@
 #define  SPI_FLASH_WriteAddress     0x10000
 #define  SPI_FLASH_ReadAddress      SPI_FLASH_WriteAddress
 #define  SPI_FLASH_SectorToErase    SPI_FLASH_WriteAddress
-#define  SST26VF032B_FLASH_ID        0x002642
+#define  SST26VF032B_FLASH_ID        0xC8471A
 
 extern uint8_t SPI_Tx_Buffer[SPI_Buff_SIZE];
 extern __IO uint32_t SPI_FLASH_ID;
