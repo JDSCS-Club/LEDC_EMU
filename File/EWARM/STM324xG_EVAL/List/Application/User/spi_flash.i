@@ -28927,11 +28927,12 @@ void SPI_FLASH_Main(void)
 {
     uint32_t sSpi_Mermory_Address = 0;
 	
-	if((mSPI_Time_Cnt==5000))
+	if((mSPI_Time_Cnt>=5000) && (mSPI_Time_Cnt<=5500))
 	{
 		
         mSPI_Time_Cnt++;
         
+        mSPI_Time_Cnt = 5600;
         
         mSPI_Write_Cnt = mSPI_Write_Cnt %70;
         
@@ -28940,7 +28941,7 @@ void SPI_FLASH_Main(void)
 		SPI_FLASH_ID = SPI_FLASH_ReadID();  
 		
 		
-		if(0x002642 == (SPI_FLASH_ID&0xFFFF))
+		if(0xC8471A == (SPI_FLASH_ID&0xFFFFFF))
 		{
      
           

@@ -30202,7 +30202,7 @@ void LED_SCREEN_PRINT(void)
 
           
             
-            for (rowcounter=0 ; rowcounter<(16) ; rowcounter++) 
+            for (rowcounter=0 ; rowcounter<(8) ; rowcounter++) 
             {
                 
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x1000), GPIO_PIN_SET);  
@@ -30210,7 +30210,7 @@ void LED_SCREEN_PRINT(void)
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x4000), GPIO_PIN_SET);  
 
                  
-                for (colcounter=0 ; colcounter<32 ; colcounter++) 
+                for (colcounter=0 ; colcounter<128 ; colcounter++) 
                 {
                   
                     
@@ -30313,9 +30313,9 @@ void LED_SCREEN_PRINT(void)
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x2000), GPIO_PIN_RESET);  
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x4000), GPIO_PIN_RESET);  
 	
-                sDelyTime = (192*(pwmindex-(8-3)+1)*(pwmindex-(8-3)+1)-59)+150;
+                sDelyTime = (128*(pwmindex-(8-3)+1)*(pwmindex-(8-3)+1)-59)+150;
                 
-               while(sDelyTime--);
+                while(sDelyTime--);
                
                 
                 
