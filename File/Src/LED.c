@@ -233,7 +233,7 @@ void LED_SCREEN_PRINT(void)
 
           
             //sColorCode = 0;
-            for (rowcounter=0 ; rowcounter<(8) ; rowcounter++) 
+            for (rowcounter=0 ; rowcounter<(16) ; rowcounter++) 
             {
                 //GPIO_SetBits(OEPORT,OEPIN);
                 HAL_GPIO_WritePin(LED_OE_Port, LED_OE_R, GPIO_PIN_SET);  // OE - High
@@ -241,7 +241,7 @@ void LED_SCREEN_PRINT(void)
                 HAL_GPIO_WritePin(LED_OE_Port, LED_OE_B, GPIO_PIN_SET);  // OE - High
 
                  
-                for (colcounter=0 ; colcounter<128 ; colcounter++) 
+                for (colcounter=0 ; colcounter<32 ; colcounter++) 
                 {
                   
                     //상단 칼라 코드 값을 확인 한다.
@@ -319,17 +319,13 @@ void LED_SCREEN_PRINT(void)
                 //HAL_GPIO_WritePin(GPIOF,GPIO_PIN_8,GPIO_PIN_SET); // LAT - High
                 HAL_GPIO_WritePin(LED_LAT_Port,LED_LAT,GPIO_PIN_SET); // LAT - High
 
-
                 
-                
-                HAL_GPIO_WritePin(LED_ADD_Port, LED_ADD_0, ((rowcounter & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET)); //A0
+                HAL_GPIO_WritePin(LED_ADD_Port, LED_ADD_0, ((rowcounter & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET));  //A0
                 HAL_GPIO_WritePin(LED_ADD_Port, LED_ADD_1, ((rowcounter & 0x02) ? GPIO_PIN_SET : GPIO_PIN_RESET));  //A1
                 HAL_GPIO_WritePin(LED_ADD_Port, LED_ADD_2, ((rowcounter & 0x04) ? GPIO_PIN_SET : GPIO_PIN_RESET));  //A2      
                 HAL_GPIO_WritePin(LED_ADD_Port, LED_ADD_3, ((rowcounter & 0x08) ? GPIO_PIN_SET : GPIO_PIN_RESET));  //A2      
 
-        
-
-                
+  
                 //HAL_GPIO_WritePin(GPIOF,GPIO_PIN_8,GPIO_PIN_RESET); // LAT - Low
                 HAL_GPIO_WritePin(LED_LAT_Port,LED_LAT,GPIO_PIN_RESET); // LAT - High
 

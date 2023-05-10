@@ -30202,7 +30202,7 @@ void LED_SCREEN_PRINT(void)
 
           
             
-            for (rowcounter=0 ; rowcounter<(8) ; rowcounter++) 
+            for (rowcounter=0 ; rowcounter<(16) ; rowcounter++) 
             {
                 
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x1000), GPIO_PIN_SET);  
@@ -30210,7 +30210,7 @@ void LED_SCREEN_PRINT(void)
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x4000), GPIO_PIN_SET);  
 
                  
-                for (colcounter=0 ; colcounter<128 ; colcounter++) 
+                for (colcounter=0 ; colcounter<32 ; colcounter++) 
                 {
                   
                     
@@ -30288,17 +30288,13 @@ void LED_SCREEN_PRINT(void)
                 
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)),((uint16_t)0x4000),GPIO_PIN_SET); 
 
-
                 
-                
-                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x1000), ((rowcounter & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET)); 
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x1000), ((rowcounter & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x2000), ((rowcounter & 0x02) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x4000), ((rowcounter & 0x04) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), ((uint16_t)0x8000), ((rowcounter & 0x08) ? GPIO_PIN_SET : GPIO_PIN_RESET));  
 
-        
-
-                
+  
                 
                 HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)),((uint16_t)0x4000),GPIO_PIN_RESET); 
 

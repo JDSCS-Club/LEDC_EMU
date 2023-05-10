@@ -30401,7 +30401,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
             nTime_Flage_100us++;
             
 
-            if(!(nTime_Flage_100us%20))
+            if(!(nTime_Flage_100us%10))
             {
                 
                 

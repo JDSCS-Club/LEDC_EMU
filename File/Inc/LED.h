@@ -76,15 +76,15 @@
 
 
 
-#define LED_DATA_R_2                  GPIO_PIN_9
+#define LED_DATA_R_2              GPIO_PIN_9
 #define LED_DATA_Port             GPIOC
 
 
-#define LED_DATA_B_2                  GPIO_PIN_10
+#define LED_DATA_B_2              GPIO_PIN_10
 #define LED_DATA_Port             GPIOC
 
 
-#define LED_DATA_G_2                  GPIO_PIN_11
+#define LED_DATA_G_2              GPIO_PIN_11
 #define LED_DATA_Port             GPIOC
 
 
