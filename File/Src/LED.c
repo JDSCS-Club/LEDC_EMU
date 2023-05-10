@@ -233,7 +233,7 @@ void LED_SCREEN_PRINT(void)
 
           
             //sColorCode = 0;
-            for (rowcounter=0 ; rowcounter<(16) ; rowcounter++) 
+            for (rowcounter=0 ; rowcounter<(8) ; rowcounter++) 
             {
                 //GPIO_SetBits(OEPORT,OEPIN);
                 HAL_GPIO_WritePin(LED_OE_Port, LED_OE_R, GPIO_PIN_SET);  // OE - High
@@ -241,7 +241,7 @@ void LED_SCREEN_PRINT(void)
                 HAL_GPIO_WritePin(LED_OE_Port, LED_OE_B, GPIO_PIN_SET);  // OE - High
 
                  
-                for (colcounter=0 ; colcounter<32 ; colcounter++) 
+                for (colcounter=0 ; colcounter<128 ; colcounter++) 
                 {
                   
                     //상단 칼라 코드 값을 확인 한다.
@@ -344,9 +344,9 @@ void LED_SCREEN_PRINT(void)
                 HAL_GPIO_WritePin(LED_OE_Port, LED_OE_G, GPIO_PIN_RESET);  // OE - Low
                 HAL_GPIO_WritePin(LED_OE_Port, LED_OE_B, GPIO_PIN_RESET);  // OE - Low
 	
-                sDelyTime = (192*(pwmindex-(8-COLDEPTH)+1)*(pwmindex-(8-COLDEPTH)+1)-59)+150;
+                sDelyTime = (128*(pwmindex-(8-COLDEPTH)+1)*(pwmindex-(8-COLDEPTH)+1)-59)+150;
                 
-               while(sDelyTime--);
+                while(sDelyTime--);
                
                 //HAL_Delay((8-COLDEPTH)+1);
                 //HAL_Delay(59*(pwmindex-(8-COLDEPTH)+1)*(pwmindex-(8-COLDEPTH)+1)-59);
@@ -360,7 +360,7 @@ void LED_SCREEN_PRINT(void)
         dTest_Print_Flag = 1;
     }
 
-   // HAL_GPIO_WritePin(LED_DIS_Port, LED_DIS, GPIO_PIN_SET);  // DIS
+   //HAL_GPIO_WritePin(LED_DIS_Port, LED_DIS, GPIO_PIN_SET);  // DIS
     
     
     HAL_GPIO_WritePin(LED_OE_Port, LED_OE_R, GPIO_PIN_SET);  // OE - High
