@@ -49,7 +49,32 @@
 
      
      
+ 
+
+
+#define LED_DATA_R_1                  GPIO_PIN_6
+#define LED_DATA_Port             GPIOC
+
+#define LED_DATA_G_1                  GPIO_PIN_7
+#define LED_DATA_Port             GPIOC
+
+
+#define LED_DATA_B_1                  GPIO_PIN_8
+#define LED_DATA_Port             GPIOC
+
      
+#define LED_DATA_R_2              GPIO_PIN_9
+#define LED_DATA_Port             GPIOC
+
+
+#define LED_DATA_B_2              GPIO_PIN_10
+#define LED_DATA_Port             GPIOC
+
+
+#define LED_DATA_G_2              GPIO_PIN_11
+#define LED_DATA_Port             GPIOC
+
+
 #define LED_ADD_0                   GPIO_PIN_12
 #define LED_ADD_Port              GPIOC
 
@@ -64,28 +89,9 @@
 
 
 
-#define LED_DATA_R_1                  GPIO_PIN_6
-#define LED_DATA_Port             GPIOC
-
-#define LED_DATA_G_1                  GPIO_PIN_7
-#define LED_DATA_Port             GPIOC
-
-
-#define LED_DATA_B_1                  GPIO_PIN_8
-#define LED_DATA_Port             GPIOC
 
 
 
-#define LED_DATA_R_2              GPIO_PIN_9
-#define LED_DATA_Port             GPIOC
-
-
-#define LED_DATA_B_2              GPIO_PIN_10
-#define LED_DATA_Port             GPIOC
-
-
-#define LED_DATA_G_2              GPIO_PIN_11
-#define LED_DATA_Port             GPIOC
 
 
 //#include "stm32f4xx_hal.h"

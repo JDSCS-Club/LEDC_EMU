@@ -241,7 +241,7 @@ void LED_SCREEN_PRINT(void)
                 HAL_GPIO_WritePin(LED_OE_Port, LED_OE_B, GPIO_PIN_SET);  // OE - High
 
                  
-                for (colcounter=0 ; colcounter<32 ; colcounter++) 
+                for (colcounter=0 ; colcounter<128 ; colcounter++) 
                 {
                   
                     //상단 칼라 코드 값을 확인 한다.

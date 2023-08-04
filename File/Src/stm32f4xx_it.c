@@ -134,17 +134,12 @@ void RTC_Alarm_IRQHandler(void)
   * @param  None
   * @retval None
   */
-      
-      //EXTI0_IRQn
-//void EXTI15_10_IRQHandler(void) 
-//{
-//  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
-//}
-
-
-void EXTI0_IRQHandler(void) 
+     
+////LEDC
+void EXTI0_IRQHandler(void)
 {
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+    
 }
 
 /**
@@ -175,10 +170,6 @@ void I2C1_ER_IRQHandler(void)
 }
 
 
-void I2C2_ER_IRQHandler(void)
-{
-  HAL_I2C_ER_IRQHandler(& hi2c2);
-}
 
 
 /**

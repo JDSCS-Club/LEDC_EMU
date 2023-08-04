@@ -169,11 +169,11 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef *heth)
   
 //  /* Enable ETHERNET clock  */
     __HAL_RCC_ETH_CLK_ENABLE();
-//  
+////  
 //  if (heth->Init.MediaInterface == ETH_MEDIA_INTERFACE_MII)
 //  {
 //    /* Output HSE clock (25MHz) on MCO pin (PA8) to clock the PHY */
-//    //HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_HSE, RCC_MCODIV_1);
+//      HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_HSE, RCC_MCODIV_1);
 //  }
 }
 
@@ -195,13 +195,13 @@ static void low_level_init(struct netif *netif)
   uint8_t sHSW_2 = 0;
   uint8_t sHSW_3 = 0;
   
-  static int sAddr_Cnt = 0;
-  
-  sAddr_Cnt++;
-  
-  sAddr_Cnt = (sAddr_Cnt > 31 ) ? 0 : sAddr_Cnt;
-  
-  MyPrintf_USART1(">>>>>>>>>>>---------(%d)\r\n",sAddr_Cnt);
+//  static int sAddr_Cnt = 0;
+//  
+//  sAddr_Cnt++;
+//  
+//  sAddr_Cnt = (sAddr_Cnt > 31 ) ? 0 : sAddr_Cnt;
+//  
+//  MyPrintf_USART1(">>>>>>>>>>>---------(%d)\r\n",sAddr_Cnt);
   
 
   
@@ -226,23 +226,17 @@ static void low_level_init(struct netif *netif)
   
   EthHandle.Instance = ETH;  
   EthHandle.Init.MACAddr = macaddress;
-  EthHandle.Init.AutoNegotiation = ETH_AUTONEGOTIATION_DISABLE;
+  EthHandle.Init.AutoNegotiation = ETH_AUTONEGOTIATION_ENABLE;
   EthHandle.Init.Speed = ETH_SPEED_100M;
   EthHandle.Init.DuplexMode = ETH_MODE_FULLDUPLEX;
   EthHandle.Init.MediaInterface = ETH_MEDIA_INTERFACE_MII;
   EthHandle.Init.RxMode = ETH_RXPOLLING_MODE;
   EthHandle.Init.ChecksumMode = ETH_CHECKSUM_BY_HARDWARE;
-  
-  
   EthHandle.Init.PhyAddress = DP83848_PHY_ADDRESS;
   
   //EthHandle.Init.PhyAddress = sAddr_Cnt;
   
-  
-  
-  
-  
-  HAL_Delay(10);
+
   
   /* configure ethernet peripheral (GPIOs, clocks, MAC, DMA) */
   if (HAL_ETH_Init(&EthHandle) == HAL_OK)
@@ -254,11 +248,11 @@ static void low_level_init(struct netif *netif)
   /* Initialize Tx Descriptors list: Chain Mode */
   HAL_ETH_DMATxDescListInit(&EthHandle, DMATxDscrTab, &Tx_Buff[0][0], ETH_TXBUFNB);
      
-  HAL_Delay(10);
+
   /* Initialize Rx Descriptors list: Chain Mode  */
   HAL_ETH_DMARxDescListInit(&EthHandle, DMARxDscrTab, &Rx_Buff[0][0], ETH_RXBUFNB);
 
-  HAL_Delay(10);
+
   /* set MAC hardware address length */
   netif->hwaddr_len = ETH_HWADDR_LEN;
   
@@ -275,27 +269,27 @@ static void low_level_init(struct netif *netif)
   
   /* device capabilities */
   /* don't set NETIF_FLAG_ETHARP if this device is not an ethernet one */
-  netif->flags |= NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_IGMP;
+  netif->flags |= NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP| NETIF_FLAG_IGMP;
   
   /* Enable MAC and DMA transmission and reception */
   HAL_ETH_Start(&EthHandle);
   
-  HAL_Delay(10);
+
   /**** Configure PHY to generate an interrupt when Eth Link state changes ****/
   /* Read Register Configuration */
   HAL_ETH_ReadPHYRegister(&EthHandle, PHY_MICR, &regvalue);
   
-  HAL_Delay(10);
+
   regvalue |= (PHY_MICR_INT_EN | PHY_MICR_INT_OE);
 
   /* Enable Interrupts */
   HAL_ETH_WritePHYRegister(&EthHandle, PHY_MICR, regvalue );
   
-  HAL_Delay(10);
+
   /* Read Register Configuration */
   HAL_ETH_ReadPHYRegister(&EthHandle, PHY_MISR, &regvalue);
   
-  HAL_Delay(10);
+
   regvalue |= PHY_MISR_LINK_INT_EN;
     
   /* Enable Interrupt on change of link status */
@@ -661,6 +655,8 @@ void ethernetif_update_config(struct netif *netif)
       /* Read the result of the auto-negotiation */
       HAL_ETH_ReadPHYRegister(&EthHandle, PHY_SR, &regvalue);
       
+      
+      
       /* Configure the MAC with the Duplex Mode fixed by the auto-negotiation process */
       if((regvalue & PHY_DUPLEX_STATUS) != (uint32_t)RESET)
       {
@@ -672,6 +668,8 @@ void ethernetif_update_config(struct netif *netif)
         /* Set Ethernet duplex mode to Half-duplex following the auto-negotiation */
         EthHandle.Init.DuplexMode = ETH_MODE_HALFDUPLEX;           
       }
+      
+      
       /* Configure the MAC with the speed fixed by the auto-negotiation process */
       if(regvalue & PHY_SPEED_STATUS)
       {  
@@ -683,6 +681,8 @@ void ethernetif_update_config(struct netif *netif)
         /* Set Ethernet speed to 100M following the auto-negotiation */ 
         EthHandle.Init.Speed = ETH_SPEED_100M;
       }
+      
+      
     }
     else /* AutoNegotiation Disable */
     {

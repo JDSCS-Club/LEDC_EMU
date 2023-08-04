@@ -82,8 +82,8 @@ void ethernetif_notify_conn_changed(struct netif *netif)
 
       //MyPrintf_USART1( "%s(%d)\r\n", __func__, __LINE__ );
       
-    MyPrintf_USART1 ("########### The network cable is now connected  \n\r");
-
+      MyPrintf_USART1 ("########### The network cable is now connected  \n\r");
+//
 //    IP_ADDR4(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
 //    IP_ADDR4(&netmask, NETMASK_ADDR0, NETMASK_ADDR1 , NETMASK_ADDR2, NETMASK_ADDR3);
 //    IP_ADDR4(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);  

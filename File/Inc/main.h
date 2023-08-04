@@ -144,10 +144,10 @@ extern __IO uint16_t ADCValue[6];
 
 
 /*Static IP ADDRESS: IP_ADDR0.IP_ADDR1.IP_ADDR2.IP_ADDR3 */
-#define IP_ADDR0   (uint8_t) 10
-#define IP_ADDR1   (uint8_t) 128
-#define IP_ADDR2   (uint8_t) (IP_ADDR1_INPUT_DATA & 0x0F) //((IP_ADDR4_INPUT_DATA<<4)|IP_ADDR3_INPUT_DATA)
-#define IP_ADDR3   (uint8_t) ((IP_ADDR2_INPUT_DATA & 0x01) ? 96 : 97)
+#define IP_ADDR0   (uint8_t) 192
+#define IP_ADDR1   (uint8_t) 168
+#define IP_ADDR2   (uint8_t) 1//(IP_ADDR1_INPUT_DATA & 0x0F) //((IP_ADDR4_INPUT_DATA<<4)|IP_ADDR3_INPUT_DATA)
+#define IP_ADDR3   (uint8_t) 130//((IP_ADDR2_INPUT_DATA & 0x01) ? 96 : 97)
    
    
 /*NETMASK*/
@@ -157,18 +157,18 @@ extern __IO uint16_t ADCValue[6];
 #define NETMASK_ADDR3   (uint8_t) 0
 
 /*Gateway Address*/
-#define GW_ADDR0   (uint8_t) 10 //10
-#define GW_ADDR1   (uint8_t) 0 //61
+#define GW_ADDR0   (uint8_t) 192 //10
+#define GW_ADDR1   (uint8_t) 168 //61
 #define GW_ADDR2   (uint8_t) 0 //0
 #define GW_ADDR3   (uint8_t) 1 //1
 
 
 #define MAC_ADDR0   0x18
 #define MAC_ADDR1   0x30
-#define MAC_ADDR2   0x09 + (IP_ADDR_VAL_DATA>>24)&0xFF
-#define MAC_ADDR3   0    + (IP_ADDR_VAL_DATA>>16)&0xFF
-#define MAC_ADDR4   0x32 + (IP_ADDR_VAL_DATA>>8)&0xFF
-#define MAC_ADDR5   0x28 + (IP_ADDR_VAL_DATA>>0)&0xFF
+#define MAC_ADDR2   0x09 //+ (IP_ADDR_VAL_DATA>>24)&0xFF
+#define MAC_ADDR3   9    //+ (IP_ADDR_VAL_DATA>>16)&0xFF
+#define MAC_ADDR4   0x32 //+ (IP_ADDR_VAL_DATA>>8)&0xFF
+#define MAC_ADDR5   0x28 //+ (IP_ADDR_VAL_DATA>>0)&0xFF
 
 
 ///*****************************************************************************

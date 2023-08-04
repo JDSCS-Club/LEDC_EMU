@@ -373,21 +373,21 @@ void USRAT_init(void)
       - BaudRate = 9600 baud
       - Hardware flow control disabled (RTS and CTS signals) */
       
-//    /*############################## USART1  디버깅 ####################################*/      
-//    UartHandle1.Instance          = USART1;
-//
-//    UartHandle1.Init.BaudRate     = 115200;
-//    UartHandle1.Init.WordLength   = UART_WORDLENGTH_8B;
-//    UartHandle1.Init.StopBits     = UART_STOPBITS_1;
-//    UartHandle1.Init.Parity       = UART_PARITY_NONE;
-//    UartHandle1.Init.HwFlowCtl    = UART_HWCONTROL_NONE;
-//    UartHandle1.Init.Mode         = UART_MODE_TX_RX;
-//    UartHandle1.Init.OverSampling = UART_OVERSAMPLING_16;
-//
-//
-//    HAL_UART_Init(&UartHandle1);
-//
-//    HAL_UART_Receive_IT(&UartHandle1, (uint8_t *)mUSART_RXBuf_1ch, 1);   // 인터럽트 발생.
+    /*############################## USART1  디버깅 ####################################*/      
+    UartHandle1.Instance          = USART1;
+
+    UartHandle1.Init.BaudRate     = 115200;
+    UartHandle1.Init.WordLength   = UART_WORDLENGTH_8B;
+    UartHandle1.Init.StopBits     = UART_STOPBITS_1;
+    UartHandle1.Init.Parity       = UART_PARITY_NONE;
+    UartHandle1.Init.HwFlowCtl    = UART_HWCONTROL_NONE;
+    UartHandle1.Init.Mode         = UART_MODE_TX_RX;
+    UartHandle1.Init.OverSampling = UART_OVERSAMPLING_16;
+
+
+    HAL_UART_Init(&UartHandle1);
+
+    HAL_UART_Receive_IT(&UartHandle1, (uint8_t *)mUSART_RXBuf_1ch, 1);   // 인터럽트 발생.
 
 
     
@@ -820,7 +820,7 @@ void MyPrintf_USART1(char *format, ... )
 	va_start(args, format);
 	vsprintf(szBuf, format, args);
     
-	DP_RING_BUF_PUSH((uint8_t*)szBuf,strlen(szBuf),1);
+	DP_RING_BUF_PUSH((uint8_t*)szBuf,strlen(szBuf),3);
     
 	//HAL_UART_Transmit_IT(&UartHandle3, (uint8_t*)szBuf,strlen(szBuf));
     
@@ -969,32 +969,32 @@ void USART_RingBuf_Pro(void)
 
         if(WORD_L(sCh) == 1)
         {
-            if(UartHandle3.gState == HAL_UART_STATE_READY) // 통신 상태가 준비 일때 전송 한다.
+            if(UartHandle1.gState == HAL_UART_STATE_READY) // 통신 상태가 준비 일때 전송 한다.
             {
                 
                 DP_RING_BUF_POP(USART_1Ch.nTxBuffer,&USART_1Ch.nTxLen);
-                HAL_UART_Transmit_IT(&UartHandle3, (uint8_t*)USART_1Ch.nTxBuffer,USART_1Ch.nTxLen);
+                HAL_UART_Transmit_IT(&UartHandle1, (uint8_t*)USART_1Ch.nTxBuffer,USART_1Ch.nTxLen);
             }
 
         }
         
-//        else if(WORD_L(sCh) == 3)
-//        {
-//            if(UartHandle4.gState == HAL_UART_STATE_READY) // 통신 상태가 준비 일때 전송 한다.
-//            {
-//                
-//                HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_SET); // CLK High   -> RTS ON
-//                
-//                DP_RING_BUF_POP(USART_3Ch.nTxBuffer,&USART_3Ch.nTxLen);
-//                HAL_UART_Transmit_IT(&UartHandle3, (uint8_t*)USART_3Ch.nTxBuffer,USART_3Ch.nTxLen);
-//                
-//#ifdef JDS_DEBUG
-//               // HAL_UART_Transmit_DMA(&UartHandle, (uint8_t*)USART_4Ch.nTxBuffer,USART_4Ch.nTxLen);
-//#endif   
-//            
-//            }
-//
-//        }
+        else if(WORD_L(sCh) == 3)
+        {
+            if(UartHandle3.gState == HAL_UART_STATE_READY) // 통신 상태가 준비 일때 전송 한다.
+            {
+                
+                HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_SET); // CLK High   -> RTS ON
+                
+                DP_RING_BUF_POP(USART_3Ch.nTxBuffer,&USART_3Ch.nTxLen);
+                HAL_UART_Transmit_IT(&UartHandle3, (uint8_t*)USART_3Ch.nTxBuffer,USART_3Ch.nTxLen);
+                
+#ifdef JDS_DEBUG
+               // HAL_UART_Transmit_DMA(&UartHandle, (uint8_t*)USART_4Ch.nTxBuffer,USART_4Ch.nTxLen);
+#endif   
+            
+            }
+
+        }
 
     }
     else{

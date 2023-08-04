@@ -296,6 +296,8 @@ int main(void)
 	lwip_init();
 
     
+    //ethernetif_set_link(&gnetif);
+    
    // HAL_Delay(600);
 	/* Configure the Network interface */
 	Netif_Config();
@@ -303,7 +305,9 @@ int main(void)
 	/* tcp echo server Init */
 	//tcp_echoserver_init();
 
-   // HAL_Delay(600);
+    
+    //ethernetif_notify_conn_changed(&gnetif);
+
     
 	/* Notify user about the network interface config */
 	User_notification(&gnetif);
@@ -317,7 +321,7 @@ int main(void)
 	USRAT_init();
 
     
-	//MX_I2C1_Init();
+	MX_I2C1_Init();
     //MX_I2C1_Init();
     
 	//MX_I2C2_Init();
@@ -326,7 +330,7 @@ int main(void)
     
     
     
-    I2C_HAL_ReadBytes(&hi2c1,0x48,0x00,(uint8_t *)nRbuf,2);
+    //I2C_HAL_ReadBytes(&hi2c1,0x48,0x00,(uint8_t *)nRbuf,2);
     
     
 //        if(I2C_HAL_WriteBytes(&hi2c1,0x48,0x00,(uint8_t *)nRbuf,2))
@@ -361,11 +365,11 @@ int main(void)
 
     MyPrintf_USART1("Power i2c OK = %02x-%02x\r\n",nRbuf[0],nRbuf[1]);
     
-	Flash_Init();
+	//Flash_Init();
     
     SPI_FLASH_Init();
     
-	HAL_Delay(10);
+	//HAL_Delay(10);
 
 
     //-------------------ADC MAC 설정 
@@ -419,9 +423,8 @@ int main(void)
     
     //AUDIO_AMP_Boot_Set();
     
-    WWDG_Init(); //
-    
-    ethernetif_set_link(&gnetif);
+    //WWDG_Init(); //
+ 
     
 	while (1)
 	{  
@@ -430,14 +433,11 @@ int main(void)
      
         ethernetif_input(&gnetif);
         
-        
-        //ethernetif_set_link(&gnetif);
-        
 		/* Handle timeouts */
 		sys_check_timeouts();
     
 		/* 내부 메모리 저장 및 읽기 */  
-		Flash_Main();
+		//Flash_Main();
 	  
 		SPI_FLASH_Main();
     
@@ -662,20 +662,22 @@ static void BSP_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	/* Enable PB14 to IT mode: Ethernet Link interrupt */ 
+    //LEDC
+    	/* Enable PB14 to IT mode: Ethernet Link interrupt */ 
 	__HAL_RCC_GPIOC_CLK_ENABLE();
-	GPIO_InitStructure.Pin = GPIO_PIN_0;
+	GPIO_InitStructure.Pin = PWRDN_INT;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
-	HAL_GPIO_Init(GPIOC, &GPIO_InitStructure);
+	HAL_GPIO_Init(PWRDN_INT_Port, &GPIO_InitStructure);
 
 	/* Enable EXTI Line interrupt */
-//	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0xF, 0);
-//	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn); 
+	HAL_NVIC_SetPriority(EXTI0_IRQn, 0xF, 0);
+	HAL_NVIC_EnableIRQ(EXTI0_IRQn); 
     
     
-	HAL_NVIC_SetPriority(EXTI0_IRQn, 0x0, 0);
-	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+    	/* Set Systick Interrupt to the highest priority */
+	HAL_NVIC_SetPriority(SysTick_IRQn, 0x0, 0x0);
+
     
 
     
@@ -683,53 +685,93 @@ static void BSP_Config(void)
 	IP_ADDR_VAL_DATA = IP_ADDR_VAL_DATA + ((0x01 % 11) * 10);
     
     
-//	//
+    
+    
+    
+   // PHY_RST PIN
 	__GPIOD_CLK_ENABLE();
 
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStructure.Pull = GPIO_PULLDOWN;
+	GPIO_InitStructure.Pull = GPIO_PULLUP;
 	GPIO_InitStructure.Pin = GPIO_PIN_6;
 	HAL_GPIO_Init(GPIOD, &GPIO_InitStructure);
     
-	/* Configure LED1, LED2 */
-	//BSP_LED_Init(LED1);
-	//BSP_LED_Init(LED2);
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true);
+    
+    
+    
+    //WDT
+	__GPIOA_CLK_ENABLE();
 
-	/* Set Systick Interrupt to the highest priority */
-	HAL_NVIC_SetPriority(SysTick_IRQn, 0x0, 0x0);
-
-
-
-// PICTO control GPIO
-	__GPIOD_CLK_ENABLE();
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStructure.Pull = GPIO_PULLUP;
-	GPIO_InitStructure.Pin =  PICTO_LED1 |PICTO_LED2 |PICTO_LED3;
-	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init(PICTO_LED1_Port, &GPIO_InitStructure); 
-
-
-
-	__GPIOE_CLK_ENABLE();
-	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStructure.Pull = GPIO_PULLUP;
-	GPIO_InitStructure.Pin =  PICTO_LED4 |PICTO_LED5;
-	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init(PICTO_LED4_Port, &GPIO_InitStructure); 
-	
-
-
-
-
-//	// RUN LED
-//	__GPIOI_CLK_ENABLE();
-//
-//   SPI CS 
-    __GPIOA_CLK_ENABLE();
-	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStructure.Pull = GPIO_PULLUP;
-	GPIO_InitStructure.Pin = GPIO_PIN_4;
+	GPIO_InitStructure.Pin = GPIO_PIN_8;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
+    
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, true);
+    
+    
+//    
+//    
+//	/* Configure LED1, LED2 */
+//	//BSP_LED_Init(LED1);
+//	//BSP_LED_Init(LED2);
+//
+//
+//
+//
+//// PICTO control GPIO
+//	__GPIOD_CLK_ENABLE();
+//	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStructure.Pull = GPIO_PULLUP;
+//	GPIO_InitStructure.Pin =  PICTO_LED1 |PICTO_LED2 |PICTO_LED3;
+//	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//	HAL_GPIO_Init(PICTO_LED1_Port, &GPIO_InitStructure); 
+//
+//
+//
+//	__GPIOE_CLK_ENABLE();
+//	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStructure.Pull = GPIO_PULLUP;
+//	GPIO_InitStructure.Pin =  PICTO_LED4 |PICTO_LED5;
+//	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//	HAL_GPIO_Init(PICTO_LED4_Port, &GPIO_InitStructure); 
+//	
+//
+//
+//
+//
+////	// RUN LED
+////	__GPIOI_CLK_ENABLE();
+////
+////   SPI CS 
+//    __GPIOA_CLK_ENABLE();
+//	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStructure.Pull = GPIO_PULLUP;
+//	GPIO_InitStructure.Pin = GPIO_PIN_4;
+//	HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
+//    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 //
@@ -886,12 +928,11 @@ static void Netif_Config(void)
 	/* Add the network interface */    
 	netif_add(&gnetif, &ipaddr, &netmask, &gw, NULL, &ethernetif_init, &ethernet_input);
 
-    HAL_Delay(10);
+
     
 	/* Registers the default network interface */
 	netif_set_default(&gnetif);
-    
-    HAL_Delay(10);
+
 
 	if (netif_is_link_up(&gnetif))
 	{
@@ -1108,20 +1149,24 @@ void Time_Main(void)
     static uint8_t d_10Sec_Cnt = 0;
     
     static uint8_t mResetCnt = 0;
+    
+    static uint8_t sTime_Cnt_1000ms = 0;
    
 	
 	m_Main_TIM_Cnt++;
     
     
-    ONTD(getSW_SR(),&d_SR_Flag,5,&d_SR_Cnt);
-    ONTD(getSW_SL(),&d_SL_Flag,5,&d_SL_Cnt);
-    ONTD(getSW_AR(),&d_AR_Flag,5,&d_AR_Cnt);
-    ONTD(getSW_RS(),&d_RS_Flag,5,&d_RS_Cnt);
+//    ONTD(getSW_SR(),&d_SR_Flag,5,&d_SR_Cnt);
+//    ONTD(getSW_SL(),&d_SL_Flag,5,&d_SL_Cnt);
+//    ONTD(getSW_AR(),&d_AR_Flag,5,&d_AR_Cnt);
+//    ONTD(getSW_RS(),&d_RS_Flag,5,&d_RS_Cnt);
         
             
     mDI_CheckFlag = ((d_SR_Flag << 3) | (d_SL_Flag << 2) | ( d_AR_Flag<< 1) | (d_RS_Flag & 0x01));  
     
     
+    //WDT 
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_8);
     
 	if (!(m_Main_TIM_Cnt % 100)) // 100ms 
 	{
@@ -1152,12 +1197,29 @@ void Time_Main(void)
         {
             
         }
-
-		HAL_GPIO_TogglePin(PICTO_LED1_Port, PICTO_LED1); // RUN LED
-		HAL_GPIO_TogglePin(PICTO_LED2_Port, PICTO_LED2); // RUN LED
-		HAL_GPIO_TogglePin(PICTO_LED3_Port, PICTO_LED3); // RUN LED
-		HAL_GPIO_TogglePin(PICTO_LED4_Port, PICTO_LED4); // RUN LED
-		HAL_GPIO_TogglePin(PICTO_LED5_Port, PICTO_LED5); // RUN LED
+        
+        sTime_Cnt_1000ms++;
+        
+        if(sTime_Cnt_1000ms & 0x01)
+        {
+            HAL_GPIO_TogglePin(PICTO_LED1_Port, PICTO_LED1);// RUN LED
+        }
+        else if(sTime_Cnt_1000ms & 0x02)
+        {
+            HAL_GPIO_TogglePin(PICTO_LED2_Port, PICTO_LED2); // RUN LED
+        }
+        else if(sTime_Cnt_1000ms & 0x04)
+        {
+            HAL_GPIO_TogglePin(PICTO_LED3_Port, PICTO_LED3); // RUN LED
+        }
+        else if(sTime_Cnt_1000ms & 0x08)
+        {
+            HAL_GPIO_TogglePin(PICTO_LED4_Port, PICTO_LED4); // RUN LED
+        }
+        else
+        {
+            HAL_GPIO_TogglePin(PICTO_LED5_Port, PICTO_LED5); // RUN LED
+        }
 
 
 		
@@ -1244,17 +1306,17 @@ void Time_Main(void)
         
         mResetCnt++;
         
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
-
-
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
-
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
+//        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
+//        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
+//        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
+//        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
+//
+//
+//        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
+//        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, false); 
+//
+//        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
+//        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, true); 
         
         //netif_set_down(&gnetif);
         
@@ -1354,7 +1416,7 @@ void Time_Main(void)
 			if ((m_Main_TIM_Cnt_Reset) >= 6) // 부팅하고 60초 동안 네트워크 연결이 없으면, 리셋 한다.
 			{
                 
-				HAL_NVIC_SystemReset();
+				//HAL_NVIC_SystemReset();
 			}
 
             
