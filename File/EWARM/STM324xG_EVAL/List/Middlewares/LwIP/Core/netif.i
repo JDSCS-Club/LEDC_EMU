@@ -31448,7 +31448,7 @@ netif_set_ipaddr(struct netif *netif, const ip4_addr_t *ipaddr)
 
     ;
   }
-
+  
   ;
 }
 
@@ -31466,6 +31466,7 @@ netif_set_gw(struct netif *netif, const ip4_addr_t *gw)
 {
   (((&netif->gw))->addr = ((gw) == 0 ? 0 : (gw)->addr));
   ;
+      
   ;
 }
 
@@ -31487,6 +31488,7 @@ netif_set_netmask(struct netif *netif, const ip4_addr_t *netmask)
   (((&netif->netmask))->addr = ((netmask) == 0 ? 0 : (netmask)->addr));
   ;
   ;
+  
   ;
 }
 
@@ -31508,6 +31510,7 @@ netif_set_default(struct netif *netif)
     ;
   }
   netif_default = netif;
+  
   ;
 }
 

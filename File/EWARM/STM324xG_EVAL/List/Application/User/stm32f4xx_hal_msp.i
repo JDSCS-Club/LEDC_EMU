@@ -29189,36 +29189,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
 
    
   }
-  else if(hi2c->Instance==((I2C_TypeDef *) (0x40000000U + 0x5800U)))
-  {
-   
 
-   
-
-    do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (1U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (1U)))); ((void)(tmpreg)); } while(0U);
-    
-
-
- 
-    GPIO_InitStruct.Pin = ((uint16_t)0x0400)|((uint16_t)0x0800);
-    GPIO_InitStruct.Mode = 0x00000012U;
-    GPIO_InitStruct.Pull = 0x00000001U;
-    GPIO_InitStruct.Speed = 0x00000002U;
-    GPIO_InitStruct.Alternate = ((uint8_t)0x04);
-    HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), &GPIO_InitStruct);
-
-     
-    do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->APB1ENR) |= ((0x1U << (22U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->APB1ENR) & ((0x1U << (22U)))); ((void)(tmpreg)); } while(0U);
-   
-
-    HAL_NVIC_SetPriority(I2C2_ER_IRQn, 1, 0);
-  HAL_NVIC_EnableIRQ(I2C2_ER_IRQn);
-  HAL_NVIC_SetPriority(I2C2_EV_IRQn, 2, 0);
-  HAL_NVIC_EnableIRQ(I2C2_EV_IRQn);
-    
-
-   
-  }
 
 }
 
@@ -29256,30 +29227,7 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
 
    
   }
-  else if(hi2c->Instance==((I2C_TypeDef *) (0x40000000U + 0x5800U)))
-  {
-   
 
-   
-     
-    (((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->APB1ENR &= ~((0x1U << (22U))));
-
-    
-
-
- 
-    HAL_GPIO_DeInit(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), ((uint16_t)0x0400));
-
-    HAL_GPIO_DeInit(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), ((uint16_t)0x0800));
-    
-    
-    HAL_NVIC_DisableIRQ(I2C2_ER_IRQn);
-    HAL_NVIC_DisableIRQ(I2C2_EV_IRQn);
-
-   
-
-   
-  }
 
 }
 

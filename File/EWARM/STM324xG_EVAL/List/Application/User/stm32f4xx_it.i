@@ -28968,17 +28968,12 @@ void RTC_Alarm_IRQHandler(void)
 
 
  
-      
-      
+     
 
-
-
-
-
-
-void EXTI0_IRQHandler(void) 
+void EXTI0_IRQHandler(void)
 {
-  HAL_GPIO_EXTI_IRQHandler(((uint16_t)0x0001));
+     HAL_GPIO_EXTI_IRQHandler(((uint16_t)0x0001));
+    
 }
 
 
@@ -29009,10 +29004,6 @@ void I2C1_ER_IRQHandler(void)
 }
 
 
-void I2C2_ER_IRQHandler(void)
-{
-  HAL_I2C_ER_IRQHandler(& hi2c2);
-}
 
 
 

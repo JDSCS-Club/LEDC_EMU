@@ -29165,21 +29165,21 @@ void USRAT_init(void)
 
  
       
+           
+    UartHandle1.Instance          = ((USART_TypeDef *) ((0x40000000U + 0x00010000U) + 0x1000U));
+
+    UartHandle1.Init.BaudRate     = 115200;
+    UartHandle1.Init.WordLength   = 0x00000000U;
+    UartHandle1.Init.StopBits     = 0x00000000U;
+    UartHandle1.Init.Parity       = 0x00000000U;
+    UartHandle1.Init.HwFlowCtl    = 0x00000000U;
+    UartHandle1.Init.Mode         = ((uint32_t)((0x1U << (3U)) |(0x1U << (2U))));
+    UartHandle1.Init.OverSampling = 0x00000000U;
 
 
+    HAL_UART_Init(&UartHandle1);
 
-
-
-
-
-
-
-
-
-
-
-
-
+    HAL_UART_Receive_IT(&UartHandle1, (uint8_t *)mUSART_RXBuf_1ch, 1);   
 
 
     
@@ -29612,7 +29612,7 @@ void MyPrintf_USART1(char *format, ... )
 	__builtin_va_start(args, format);
 	vsprintf(szBuf, format, args);
     
-	DP_RING_BUF_PUSH((uint8_t*)szBuf,strlen(szBuf),1);
+	DP_RING_BUF_PUSH((uint8_t*)szBuf,strlen(szBuf),3);
     
 	
     
@@ -29761,32 +29761,30 @@ void USART_RingBuf_Pro(void)
 
         if(((sCh) & 0x0ff) == 1)
         {
-            if(UartHandle3.gState == HAL_UART_STATE_READY) 
+            if(UartHandle1.gState == HAL_UART_STATE_READY) 
             {
                 
                 DP_RING_BUF_POP(USART_1Ch.nTxBuffer,&USART_1Ch.nTxLen);
-                HAL_UART_Transmit_IT(&UartHandle3, (uint8_t*)USART_1Ch.nTxBuffer,USART_1Ch.nTxLen);
+                HAL_UART_Transmit_IT(&UartHandle1, (uint8_t*)USART_1Ch.nTxBuffer,USART_1Ch.nTxLen);
             }
 
         }
         
+        else if(((sCh) & 0x0ff) == 3)
+        {
+            if(UartHandle3.gState == HAL_UART_STATE_READY) 
+            {
+                
+                HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)),((uint16_t)0x1000),GPIO_PIN_SET); 
+                
+                DP_RING_BUF_POP(USART_3Ch.nTxBuffer,&USART_3Ch.nTxLen);
+                HAL_UART_Transmit_IT(&UartHandle3, (uint8_t*)USART_3Ch.nTxBuffer,USART_3Ch.nTxLen);
+                
+               
+            
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
 
     }
     else{

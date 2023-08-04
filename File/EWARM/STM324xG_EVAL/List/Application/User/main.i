@@ -30102,8 +30102,14 @@ void setAmp_Mute_2(_Bool state);
 
      
      
-     
+ 
 
+
+
+
+
+
+     
 
 
 
@@ -31720,14 +31726,14 @@ const unsigned char completeVersion[] =
 const unsigned char completeVersionBuild[] = 
 {
 	'B',
-	("May 10 2023"[ 9]),
-	("May 10 2023"[10]),
+	("Jul 31 2023"[ 9]),
+	("Jul 31 2023"[10]),
    
-	((("May 10 2023"[0] == 'O') || ("May 10 2023"[0] == 'N') || ("May 10 2023"[0] == 'D')) ? '1' : '0'),
-	( (("May 10 2023"[0] == 'J' && "May 10 2023"[1] == 'a' && "May 10 2023"[2] == 'n')) ? '1' : (("May 10 2023"[0] == 'F')) ? '2' : (("May 10 2023"[0] == 'M' && "May 10 2023"[1] == 'a' && "May 10 2023"[2] == 'r')) ? '3' : (("May 10 2023"[0] == 'A' && "May 10 2023"[1] == 'p')) ? '4' : (("May 10 2023"[0] == 'M' && "May 10 2023"[1] == 'a' && "May 10 2023"[2] == 'y')) ? '5' : (("May 10 2023"[0] == 'J' && "May 10 2023"[1] == 'u' && "May 10 2023"[2] == 'n')) ? '6' : (("May 10 2023"[0] == 'J' && "May 10 2023"[1] == 'u' && "May 10 2023"[2] == 'l')) ? '7' : (("May 10 2023"[0] == 'A' && "May 10 2023"[1] == 'u')) ? '8' : (("May 10 2023"[0] == 'S')) ? '9' : (("May 10 2023"[0] == 'O')) ? '0' : (("May 10 2023"[0] == 'N')) ? '1' : (("May 10 2023"[0] == 'D')) ? '2' : '?' ),
+	((("Jul 31 2023"[0] == 'O') || ("Jul 31 2023"[0] == 'N') || ("Jul 31 2023"[0] == 'D')) ? '1' : '0'),
+	( (("Jul 31 2023"[0] == 'J' && "Jul 31 2023"[1] == 'a' && "Jul 31 2023"[2] == 'n')) ? '1' : (("Jul 31 2023"[0] == 'F')) ? '2' : (("Jul 31 2023"[0] == 'M' && "Jul 31 2023"[1] == 'a' && "Jul 31 2023"[2] == 'r')) ? '3' : (("Jul 31 2023"[0] == 'A' && "Jul 31 2023"[1] == 'p')) ? '4' : (("Jul 31 2023"[0] == 'M' && "Jul 31 2023"[1] == 'a' && "Jul 31 2023"[2] == 'y')) ? '5' : (("Jul 31 2023"[0] == 'J' && "Jul 31 2023"[1] == 'u' && "Jul 31 2023"[2] == 'n')) ? '6' : (("Jul 31 2023"[0] == 'J' && "Jul 31 2023"[1] == 'u' && "Jul 31 2023"[2] == 'l')) ? '7' : (("Jul 31 2023"[0] == 'A' && "Jul 31 2023"[1] == 'u')) ? '8' : (("Jul 31 2023"[0] == 'S')) ? '9' : (("Jul 31 2023"[0] == 'O')) ? '0' : (("Jul 31 2023"[0] == 'N')) ? '1' : (("Jul 31 2023"[0] == 'D')) ? '2' : '?' ),
    
-	(("May 10 2023"[4] >= '0') ? ("May 10 2023"[4]) : '0'),
-	("May 10 2023"[ 5]),
+	(("Jul 31 2023"[4] >= '0') ? ("Jul 31 2023"[4]) : '0'),
+	("Jul 31 2023"[ 5]),
 	
 	
     
@@ -31796,6 +31802,8 @@ int main(void)
 	lwip_init();
 
     
+    
+    
    
 	 
 	Netif_Config();
@@ -31803,7 +31811,9 @@ int main(void)
 	 
 	
 
-   
+    
+    
+
     
 	 
 	User_notification(&gnetif);
@@ -31817,7 +31827,7 @@ int main(void)
 	USRAT_init();
 
     
-	
+	MX_I2C1_Init();
     
     
 	
@@ -31826,7 +31836,7 @@ int main(void)
     
     
     
-    I2C_HAL_ReadBytes(&hi2c1,0x48,0x00,(uint8_t *)nRbuf,2);
+    
     
     
 
@@ -31861,11 +31871,11 @@ int main(void)
 
     MyPrintf_USART1("Power i2c OK = %02x-%02x\r\n",nRbuf[0],nRbuf[1]);
     
-	Flash_Init();
+	
     
     SPI_FLASH_Init();
     
-	HAL_Delay(10);
+	
 
 
     
@@ -31919,9 +31929,8 @@ int main(void)
     
     
     
-    WWDG_Init(); 
     
-    ethernetif_set_link(&gnetif);
+ 
     
 	while (1)
 	{  
@@ -31930,14 +31939,11 @@ int main(void)
      
         ethernetif_input(&gnetif);
         
-        
-        
-        
 		 
 		sys_check_timeouts();
     
 		   
-		Flash_Main();
+		
 	  
 		SPI_FLASH_Main();
     
@@ -32160,7 +32166,8 @@ static void BSP_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	  
+    
+    	  
 	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (2U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (2U)))); ((void)(tmpreg)); } while(0U);
 	GPIO_InitStructure.Pin = ((uint16_t)0x0001);
 	GPIO_InitStructure.Mode = 0x10210000U;
@@ -32168,12 +32175,13 @@ static void BSP_Config(void)
 	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0800U)), &GPIO_InitStructure);
 
 	 
-
-
+	HAL_NVIC_SetPriority(EXTI0_IRQn, 0xF, 0);
+	HAL_NVIC_EnableIRQ(EXTI0_IRQn); 
     
     
-	HAL_NVIC_SetPriority(EXTI0_IRQn, 0x0, 0);
-	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+    	 
+	HAL_NVIC_SetPriority(SysTick_IRQn, 0x0, 0x0);
+
     
 
     
@@ -32181,53 +32189,93 @@ static void BSP_Config(void)
 	IP_ADDR_VAL_DATA = IP_ADDR_VAL_DATA + ((0x01 % 11) * 10);
     
     
-
+    
+    
+    
+   
 	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (3U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (3U)))); ((void)(tmpreg)); } while(0U);
 
 	GPIO_InitStructure.Mode = 0x00000001U;
-	GPIO_InitStructure.Pull = 0x00000002U;
+	GPIO_InitStructure.Pull = 0x00000001U;
 	GPIO_InitStructure.Pin = ((uint16_t)0x0040);
 	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), &GPIO_InitStructure);
     
-	 
-	
-	
+    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 1);
+    
+    
+    
+    
+	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (0U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (0U)))); ((void)(tmpreg)); } while(0U);
 
-	 
-	HAL_NVIC_SetPriority(SysTick_IRQn, 0x0, 0x0);
-
-
-
-
-	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (3U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (3U)))); ((void)(tmpreg)); } while(0U);
 	GPIO_InitStructure.Mode = 0x00000001U;
 	GPIO_InitStructure.Pull = 0x00000001U;
-	GPIO_InitStructure.Pin =  ((uint16_t)0x0080) |((uint16_t)0x0400) |((uint16_t)0x0800);
-	GPIO_InitStructure.Speed = 0x00000003U;
-	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), &GPIO_InitStructure); 
-
-
-
-	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (4U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (4U)))); ((void)(tmpreg)); } while(0U);
-	GPIO_InitStructure.Mode = 0x00000001U;
-	GPIO_InitStructure.Pull = 0x00000001U;
-	GPIO_InitStructure.Pin =  ((uint16_t)0x0001) |((uint16_t)0x0002);
-	GPIO_InitStructure.Speed = 0x00000003U;
-	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1000U)), &GPIO_InitStructure); 
-	
-
-
-
-
-
-
-
-
-    do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (0U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (0U)))); ((void)(tmpreg)); } while(0U);
-	GPIO_InitStructure.Mode = 0x00000001U;
-	GPIO_InitStructure.Pull = 0x00000001U;
-	GPIO_InitStructure.Pin = ((uint16_t)0x0010);
+	GPIO_InitStructure.Pin = ((uint16_t)0x0100);
 	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0000U)), &GPIO_InitStructure);
+    
+    HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0000U)), ((uint16_t)0x0100), 1);
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 
@@ -32378,12 +32426,11 @@ static void Netif_Config(void)
 	     
 	netif_add(&gnetif, &ipaddr, &netmask, &gw, 0, &ethernetif_init, &ethernet_input);
 
-    HAL_Delay(10);
+
     
 	 
 	netif_set_default(&gnetif);
-    
-    HAL_Delay(10);
+
 
 	if ((((&gnetif)->flags & 0x04U) ? (u8_t)1 : (u8_t)0))
 	{
@@ -32600,20 +32647,24 @@ void Time_Main(void)
     static uint8_t d_10Sec_Cnt = 0;
     
     static uint8_t mResetCnt = 0;
+    
+    static uint8_t sTime_Cnt_1000ms = 0;
    
 	
 	m_Main_TIM_Cnt++;
     
     
-    ONTD(getSW_SR(),&d_SR_Flag,5,&d_SR_Cnt);
-    ONTD(getSW_SL(),&d_SL_Flag,5,&d_SL_Cnt);
-    ONTD(getSW_AR(),&d_AR_Flag,5,&d_AR_Cnt);
-    ONTD(getSW_RS(),&d_RS_Flag,5,&d_RS_Cnt);
+
+
+
+
         
             
     mDI_CheckFlag = ((d_SR_Flag << 3) | (d_SL_Flag << 2) | ( d_AR_Flag<< 1) | (d_RS_Flag & 0x01));  
     
     
+    
+    HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0000U)), ((uint16_t)0x0100));
     
 	if (!(m_Main_TIM_Cnt % 100)) 
 	{
@@ -32644,12 +32695,29 @@ void Time_Main(void)
         {
             
         }
-
-		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0080)); 
-		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0400)); 
-		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0800)); 
-		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1000U)), ((uint16_t)0x0001)); 
-		HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1000U)), ((uint16_t)0x0002)); 
+        
+        sTime_Cnt_1000ms++;
+        
+        if(sTime_Cnt_1000ms & 0x01)
+        {
+            HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0080));
+        }
+        else if(sTime_Cnt_1000ms & 0x02)
+        {
+            HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0400)); 
+        }
+        else if(sTime_Cnt_1000ms & 0x04)
+        {
+            HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0800)); 
+        }
+        else if(sTime_Cnt_1000ms & 0x08)
+        {
+            HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1000U)), ((uint16_t)0x0001)); 
+        }
+        else
+        {
+            HAL_GPIO_TogglePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x1000U)), ((uint16_t)0x0002)); 
+        }
 
 
 		
@@ -32736,17 +32804,17 @@ void Time_Main(void)
         
         mResetCnt++;
         
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 1); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 1); 
 
 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 0); 
 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 1); 
-        HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0C00U)), ((uint16_t)0x0040), 1); 
+
+
+
+
+
+
+
+
         
         
         
@@ -32828,7 +32896,7 @@ void Time_Main(void)
 			if ((m_Main_TIM_Cnt_Reset) >= 6) 
 			{
                 
-				HAL_NVIC_SystemReset();
+				
 			}
 
             

@@ -29046,7 +29046,7 @@ void ethernetif_notify_conn_changed(struct netif *netif)
 
       
       
-    MyPrintf_USART1 ("########### The network cable is now connected  \n\r");
+      MyPrintf_USART1 ("########### The network cable is now connected  \n\r");
 
 
 
@@ -29153,9 +29153,9 @@ void DHCP_Process(struct netif *netif)
           dhcp_stop(netif);
           
            
-          (&ipaddr)->addr = ((u32_t)(((uint8_t) ((IP_ADDR2_INPUT_DATA & 0x01) ? 96 : 97)) & 0xff) << 24) | ((u32_t)(((uint8_t) (IP_ADDR1_INPUT_DATA & 0x0F)) & 0xff) << 16) | ((u32_t)(((uint8_t) 128) & 0xff) << 8) | (u32_t)(((uint8_t) 10) & 0xff);
+          (&ipaddr)->addr = ((u32_t)(((uint8_t) 130) & 0xff) << 24) | ((u32_t)(((uint8_t) 1) & 0xff) << 16) | ((u32_t)(((uint8_t) 168) & 0xff) << 8) | (u32_t)(((uint8_t) 192) & 0xff);
           (&netmask)->addr = ((u32_t)(((uint8_t) 0) & 0xff) << 24) | ((u32_t)(((uint8_t) 0) & 0xff) << 16) | ((u32_t)(((uint8_t) 255) & 0xff) << 8) | (u32_t)(((uint8_t) 255) & 0xff);
-          (&gw)->addr = ((u32_t)(((uint8_t) 1) & 0xff) << 24) | ((u32_t)(((uint8_t) 0) & 0xff) << 16) | ((u32_t)(((uint8_t) 0) & 0xff) << 8) | (u32_t)(((uint8_t) 10) & 0xff);
+          (&gw)->addr = ((u32_t)(((uint8_t) 1) & 0xff) << 24) | ((u32_t)(((uint8_t) 0) & 0xff) << 16) | ((u32_t)(((uint8_t) 168) & 0xff) << 8) | (u32_t)(((uint8_t) 192) & 0xff);
           netif_set_addr(netif, &ipaddr, &netmask, &gw);
           
           

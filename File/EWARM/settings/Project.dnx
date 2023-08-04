@@ -16,7 +16,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>1177407946</Checksum>
+        <Checksum>767928557</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -155,8 +155,8 @@
         <PowerConnectPC>1</PowerConnectPC>
     </SWOManager>
     <ArmDriver>
-        <EnableCache>1</EnableCache>
         <EnforceMemoryConfiguration>1</EnforceMemoryConfiguration>
+        <EnableCache>1</EnableCache>
     </ArmDriver>
     <PlDdfRanges>
         <ConfigRanges0>Memory ROM 536805376 32768 1</ConfigRanges0>
@@ -173,34 +173,6 @@
         <ConfigRanges11>Memory RAM1 536870912 131072 0</ConfigRanges11>
         <ConfigRanges12>Memory RAM_BitBand 570425344 4194304 0</ConfigRanges12>
     </PlDdfRanges>
-    <PlCacheRanges>
-        <CustomRanges0>0 0 1048576 1 0</CustomRanges0>
-        <CustomRangesText0 />
-        <CustomRanges1>0 134217728 1048576 1 0</CustomRanges1>
-        <CustomRangesText1 />
-        <CustomRanges2>0 268435456 65536 0 0</CustomRanges2>
-        <CustomRangesText2 />
-        <CustomRanges3>0 536805376 32768 1 0</CustomRanges3>
-        <CustomRangesText3 />
-        <CustomRanges4>0 536854528 64 2 0</CustomRanges4>
-        <CustomRangesText4 />
-        <CustomRanges5>0 536870912 131072 0 0</CustomRanges5>
-        <CustomRangesText5 />
-        <CustomRanges6>0 570425344 4194304 0 0</CustomRanges6>
-        <CustomRangesText6 />
-        <CustomRanges7>0 1073741824 524288 2 0</CustomRanges7>
-        <CustomRangesText7 />
-        <CustomRanges8>0 1107296256 16777216 2 0</CustomRanges8>
-        <CustomRangesText8 />
-        <CustomRanges9>0 1342177280 397312 2 0</CustomRanges9>
-        <CustomRangesText9 />
-        <CustomRanges10>0 1610612736 1073741824 2 0</CustomRanges10>
-        <CustomRangesText10 />
-        <CustomRanges11>0 2684354560 4096 2 0</CustomRanges11>
-        <CustomRangesText11 />
-        <CustomRanges12>0 3758096384 1048576 2 0</CustomRanges12>
-        <CustomRangesText12 />
-    </PlCacheRanges>
     <Trace1>
         <Enabled>1</Enabled>
         <ShowSource>0</ShowSource>

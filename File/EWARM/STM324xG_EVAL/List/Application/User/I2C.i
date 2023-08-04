@@ -29914,13 +29914,14 @@ void MX_I2C1_Init(void)
 {
 	GPIO_InitTypeDef   GPIO_InitStructure;
 
+    do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (1U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (1U)))); ((void)(tmpreg)); } while(0U);
+    
 	GPIO_InitStructure.Pin =  ((uint16_t)0x0040) | ((uint16_t)0x0080);
 	GPIO_InitStructure.Mode = 0x00000012U;
 	GPIO_InitStructure.Pull = 0x00000001U;
 	GPIO_InitStructure.Speed = 0x00000001U;
 	GPIO_InitStructure.Alternate = ((uint8_t)0x04);
         
-	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (1U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (1U)))); ((void)(tmpreg)); } while(0U);
 	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), &GPIO_InitStructure); 
         
 
@@ -29937,7 +29938,7 @@ void MX_I2C1_Init(void)
 
 	 
 	hi2c1.Instance = ((I2C_TypeDef *) (0x40000000U + 0x5400U));
-	hi2c1.Init.ClockSpeed = 400000;
+	hi2c1.Init.ClockSpeed = 100000;
 	hi2c1.Init.DutyCycle = 0x00000000U;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = 0x00004000U;
@@ -29950,55 +29951,11 @@ void MX_I2C1_Init(void)
 	{
 		Error_Handler();
 	}
+    else
+    {
+        MyPrintf_USART1("~~~~~~MX_I2C1_Init OK ~~~~~~ r\n");
+    }
 
-
-}
-
-
-
-
-
-
- 
-void MX_I2C2_Init(void)
-{
-  
-	GPIO_InitTypeDef   GPIO_InitStructure;
-
-	GPIO_InitStructure.Pin =  ((uint16_t)0x0400) | ((uint16_t)0x0800);
-	GPIO_InitStructure.Mode = 0x00000012U;
-	GPIO_InitStructure.Pull = 0x00000001U;
-	GPIO_InitStructure.Speed = 0x00000001U;
-	GPIO_InitStructure.Alternate = ((uint8_t)0x04);
-        
-	do { volatile uint32_t tmpreg = 0x00U; ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) |= ((0x1U << (1U)))); tmpreg = ((((RCC_TypeDef *) ((0x40000000U + 0x00020000U) + 0x3800U))->AHB1ENR) & ((0x1U << (1U)))); ((void)(tmpreg)); } while(0U);
-	HAL_GPIO_Init(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), &GPIO_InitStructure); 
-        
-
-	HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), ((uint16_t)0x0400), GPIO_PIN_SET);
-	HAL_GPIO_WritePin(((GPIO_TypeDef *) ((0x40000000U + 0x00020000U) + 0x0400U)), ((uint16_t)0x0800), GPIO_PIN_SET);
-
-	 
-
-	 
-
-	 
-
-	 
-	hi2c2.Instance = ((I2C_TypeDef *) (0x40000000U + 0x5800U));
-	hi2c2.Init.ClockSpeed = 400000;
-	hi2c2.Init.DutyCycle = 0x00000000U;
-	hi2c2.Init.OwnAddress1 = 0;
-	hi2c2.Init.AddressingMode = 0x00004000U;
-	hi2c2.Init.DualAddressMode = 0x00000000U;
-	hi2c2.Init.OwnAddress2 = 0;
-	hi2c2.Init.GeneralCallMode = 0x00000000U;
-	hi2c2.Init.NoStretchMode = 0x00000000U;
-      
-	if (HAL_I2C_Init(&hi2c2) != HAL_OK)
-	{
-		Error_Handler();
-	}
 
 }
 
@@ -30448,7 +30405,7 @@ void AMP_Init(uint16_t Address)
 	uint8_t     nRbuf[10];
       
 
-     MyPrintf_USART1( "+++++ %s(%d)\r\n", __func__, 576 );
+     MyPrintf_USART1( "+++++ %s(%d)\r\n", __func__, 533 );
      
      
 	nRbuf[0] = 0x3A; 
@@ -30560,7 +30517,7 @@ int AMP_PowOn_Check(void)
     sPowerStandBy = 0;
     
     
-    MyPrintf_USART1( "+++++ %s(%d)\r\n", __func__, 688 );
+    MyPrintf_USART1( "+++++ %s(%d)\r\n", __func__, 645 );
     
     
     I2C_HAL_ReadBytes(&hi2c2, AMP_ID_1, 0x00, (uint8_t *)nRbuf, 1);

@@ -29092,6 +29092,10 @@ void SPI_FLASH_Init(void)
 	{
 		Error_Handler();
 	}
+    else
+    {
+        MyPrintf_USART1("~~~~~~SPI_FLASH_Init OK ~~~~~~ r\n");
+    }
 
 
 	SPI_FLASH_GlobalBlockProtec();
